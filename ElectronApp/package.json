@@ -1,0 +1,14 @@
+{
+  "name": "proyectojacoboapp",
+  "version": "1.0.0",
+  "description": "proyecto jacobo app",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },  
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^24.2.0"
+  }
+}
