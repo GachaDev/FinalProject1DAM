@@ -1,3 +1,3 @@
 cd Project1
 cd ClientApp
-npm run start
+npm run tauri dev
