@@ -29,7 +29,7 @@ html {
 
 /* animacion logo */
 .logo-animation {
-  animation: logo 1s forwards;
+  animation: logo 1.8s forwards;
 }
 
 @keyframes logo {

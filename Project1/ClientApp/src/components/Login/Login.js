@@ -18,6 +18,7 @@ import {
 export default function Login({ setIsLogged }) {
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [showRegisterForm, setShowRegisterForm] = useState(false);
+    const [openSound, setOpenSound] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -39,9 +40,14 @@ export default function Login({ setIsLogged }) {
     };
     
     useEffect(() => {
+        if (!openSound) {
+            const audio = new Audio('https://cdn.discordapp.com/attachments/919641744704954461/1106633644933648487/SnapSave_mp3cut.net.mp3');
+            audio.play();
+            setOpenSound(true);
+        }
         const timeoutId = setTimeout(() => {
           setShowLoginForm(true);
-        }, 1200);
+        }, 2050);
         return () => clearTimeout(timeoutId);
     }, [showLoginForm]);  
 
