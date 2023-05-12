@@ -30,9 +30,7 @@ export default function Login({ setIsLogged }) {
             setIsLogged(true);
         }
     };
-      
-          
-
+    
     useEffect(() => {
         const timeoutId = setTimeout(() => {
           setShowLoginForm(true);
@@ -55,16 +53,10 @@ export default function Login({ setIsLogged }) {
                     <div className='formulario'>
                     <Title
                         align='center'
-                        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
+                        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900, color: 'white' })}
                     >
-                        ¡Bienvenido!
+                        Kings League
                     </Title>
-                    <Text color='black' size='sm' align='center' mt={5}>
-                        ¿No tienes una cuenta todavía?{' '}
-                        <Anchor size='sm' color='white' component='button'>
-                        Crear cuenta
-                        </Anchor>
-                    </Text>
                     <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
                         <TextInput
                             label='Email'
@@ -90,6 +82,12 @@ export default function Login({ setIsLogged }) {
                         <Button onClick={handleSubmit} color='dark' fullWidth mt='xl'>
                             Iniciar sesión
                         </Button>
+                        <Text color='black' size='sm' align='center' mt={5}>
+                            ¿No tienes una cuenta todavía?{' '}
+                            <Anchor size='sm' color='blue' component='button'>
+                            Crear cuenta
+                            </Anchor>
+                        </Text>
                         {errorMessage && (
                             <Text color='red' size='sm' align='center' mt={5}>
                             {errorMessage}
