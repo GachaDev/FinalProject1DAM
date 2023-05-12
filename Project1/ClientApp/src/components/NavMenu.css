@@ -16,3 +16,13 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+
+.logIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f7ab35;
+  background-image: linear-gradient(236.07deg,#f7ab35 .09%,#e8521e 102.47%);
+}
