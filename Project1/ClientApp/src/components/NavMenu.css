@@ -26,3 +26,34 @@ html {
   background: #f7ab35;
   background-image: linear-gradient(236.07deg,#f7ab35 .09%,#e8521e 102.47%);
 }
+
+/* animacion logo */
+.logo-animation {
+  animation: logo 1s forwards;
+}
+
+@keyframes logo {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.formulario {
+  animation: fadeUp 1s ease-in-out forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
