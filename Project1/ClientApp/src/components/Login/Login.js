@@ -1,4 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
+import RegisterAccount from './RegisterAccount';
+import LoginAccount from './LoginAccount';
 import {
     TextInput,
     PasswordInput,
@@ -15,17 +17,22 @@ import {
 
 export default function Login({ setIsLogged }) {
     const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
+    const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
   
     const handleSubmit = async (event) => {
         event.preventDefault();
         const response = await fetch(`https://localhost:7233/api/usuarios/${email}/${password}`);
         const data = await response.json();
-        if (data.length === 0) {
-            setErrorMessage('Correo o contraseña incorrectos');
+        if (data.length === 0 || password === "" || email === "") {
+            if (password === "" || email === "") {
+                setErrorMessage('Introduce el correo y la contraseña para poder iniciar sesión');
+            } else {
+                setErrorMessage('Correo o contraseña incorrectos');
+            }
         } else {
             setIsLogged(true);
         }
@@ -36,7 +43,7 @@ export default function Login({ setIsLogged }) {
           setShowLoginForm(true);
         }, 1200);
         return () => clearTimeout(timeoutId);
-    }, []);
+    }, [showLoginForm]);  
 
     return (
         <div className='logIn'>
@@ -48,54 +55,11 @@ export default function Login({ setIsLogged }) {
                 src='https://kingsleague.pro/wp-content/uploads/2023/05/logo-kings.svg'
                 alt='Random image'
                 />
-                {showLoginForm && (
-                <>
-                    <div className='formulario'>
-                    <Title
-                        align='center'
-                        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900, color: 'white' })}
-                    >
-                        Kings League
-                    </Title>
-                    <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
-                        <TextInput
-                            label='Email'
-                            placeholder='test@gmail.com'
-                            required
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
-                        <PasswordInput
-                            label='Contraseña'
-                            placeholder='Tu contraseña'
-                            required
-                            mt='md'
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                        />
-                        <Group position='apart' mt='lg'>
-                            <Checkbox label='Recordar' checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
-                            <Anchor component='button' size='sm'>
-                            ¿Has olvidado la contraseña?
-                            </Anchor>
-                        </Group>
-                        <Button onClick={handleSubmit} color='dark' fullWidth mt='xl'>
-                            Iniciar sesión
-                        </Button>
-                        <Text color='black' size='sm' align='center' mt={5}>
-                            ¿No tienes una cuenta todavía?{' '}
-                            <Anchor size='sm' color='blue' component='button'>
-                            Crear cuenta
-                            </Anchor>
-                        </Text>
-                        {errorMessage && (
-                            <Text color='red' size='sm' align='center' mt={5}>
-                            {errorMessage}
-                            </Text>
-                        )}
-                    </Paper>
-                    </div>
-                </>
+                {showLoginForm && !showRegisterForm && (
+                    <LoginAccount setShowRegisterForm={setShowRegisterForm} handleSubmit={handleSubmit} setEmail={setEmail} setPassword={setPassword} errorMessage={errorMessage} />
+                )}
+                {showRegisterForm  && (
+                    <RegisterAccount setShowRegisterForm={setShowRegisterForm}/>
                 )}
             </Container>
         </div>

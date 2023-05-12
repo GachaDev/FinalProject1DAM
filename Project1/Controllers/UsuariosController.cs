@@ -129,6 +129,21 @@ namespace Project1.Controllers
 
             return usuarios;
         }
+        
+        [HttpPost("register")]
+        public async Task<ActionResult<Usuarios>> Register([FromBody] Usuarios usuario)
+        {
+            if (usuario == null)
+            {
+                return BadRequest("No se ha proporcionado ningún usuario.");
+            }
+
+            _context.usuarios.Add(usuario);
+            await _context.SaveChangesAsync();
+
+            return Ok("Usuario creado con éxito");
+        }
+
 
         private bool UsuariosExists(int id)
         {
