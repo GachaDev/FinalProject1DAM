@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: rem(56),
-    maxWidth: '100rem',
+    maxWidth: '115rem',
     [theme.fn.smallerThan('sm')]: {
       justifyContent: 'flex-start',
     },
