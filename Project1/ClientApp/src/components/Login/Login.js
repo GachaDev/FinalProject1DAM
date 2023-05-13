@@ -61,6 +61,13 @@ export default function Login({ setIsLogged }) {
                 src='https://kingsleague.pro/wp-content/uploads/2023/05/logo-kings.svg'
                 alt='Random image'
                 />
+                <Title
+                    align='center'
+                    className='logo-animation'
+                    sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900, color: 'white' })}
+                >
+                    Kings League
+                </Title>
                 {showLoginForm && !showRegisterForm && (
                     <LoginAccount setShowRegisterForm={setShowRegisterForm} handleSubmit={handleSubmit} setEmail={setEmail} setPassword={setPassword} errorMessage={errorMessage} />
                 )}

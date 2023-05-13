@@ -16,12 +16,6 @@ import {
 export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmail, setPassword, errorMessage}) {  
     return (
         <div className='formulario'>
-            <Title
-                align='center'
-                sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900, color: 'white' })}
-            >
-                Kings League
-            </Title>
             <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
                 <TextInput
                     label='Email'
