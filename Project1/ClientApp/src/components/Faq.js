@@ -33,34 +33,17 @@ export default function FAQ() {
           </Col>
           <Col span={12} md={6}>
             <Title order={2} ta="left" className={classes.title}>
-              Frequently Asked Questions
+              Preguntas frecuentes
             </Title>
 
             <Accordion chevronPosition="right" defaultValue="reset-password" variant="separated">
               <Accordion.Item className={classes.item} value="reset-password">
-                <Accordion.Control>How can I reset my password?</Accordion.Control>
+                <Accordion.Control>En que consiste la Kings League?</Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="another-account">
-                <Accordion.Control>Can I create more that one account?</Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
-              </Accordion.Item>
-
-              <Accordion.Item className={classes.item} value="newsletter">
-                <Accordion.Control>How can I subscribe to monthly newsletter?</Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
-              </Accordion.Item>
-
-              <Accordion.Item className={classes.item} value="credit-card">
-                <Accordion.Control>
-                  Do you store credit card information securely?
-                </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
-              </Accordion.Item>
-
-              <Accordion.Item className={classes.item} value="payment">
-                <Accordion.Control>What payment systems to you work with?</Accordion.Control>
+                <Accordion.Control>Como surgio la Kings League?</Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
             </Accordion>
