@@ -2,21 +2,17 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
+export default function Layout(props) {
+  const links = [
+    { link: '/', label: 'Home' },
+    { link: '/FAQ', label: 'Preguntas' },
+    { link: '/contact', label: 'Contact' },
+  ];
 
-  render() {
-    const links = [
-      { link: '/', label: 'Home' },
-      { link: '/about', label: 'About' },
-      { link: '/contact', label: 'Contact' },
-    ];
-
-    return (
-      <div>
-        <NavMenu links={links} />
-        {this.props.children}
-      </div>
-    );
-  }
+  return (
+    <div>
+      <NavMenu links={links} />
+      {props.children}
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from './Layout';
+import Layout from './Layout';
 import AppRoutes from '../AppRoutes';
 
 export default function LoggedInComponent() {
