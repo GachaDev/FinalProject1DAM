@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import RegisterAccount from './RegisterAccount';
 import LoginAccount from './LoginAccount';
+import { UseAdmin } from '../../Zustand/UseAdmin';
 import {
     TextInput,
     PasswordInput,
@@ -23,7 +24,8 @@ export default function Login({ setIsLogged }) {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-  
+    const { Admin, setAdmin } = UseAdmin();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const response = await fetch(`https://localhost:7233/api/usuarios/${email}/${password}`);
@@ -35,11 +37,13 @@ export default function Login({ setIsLogged }) {
                 setErrorMessage('Correo o contraseña incorrectos');
             }
         } else {
+            setAdmin(true);
             setIsLogged(true);
         }
     };
     
     useEffect(() => {
+        console.log(Admin)
         if (!openSound) {
             const audio = new Audio('https://cdn.discordapp.com/attachments/919641744704954461/1106633644933648487/SnapSave_mp3cut.net.mp3');
             audio.play();
@@ -69,7 +73,7 @@ export default function Login({ setIsLogged }) {
                     Kings League
                 </Title>
                 {showLoginForm && !showRegisterForm && (
-                    <LoginAccount setShowRegisterForm={setShowRegisterForm} handleSubmit={handleSubmit} setEmail={setEmail} setPassword={setPassword} errorMessage={errorMessage} />
+                    <LoginAccount setShowRegisterForm={setShowRegisterForm} handleSubmit={handleSubmit} setEmail={setEmail} setPassword={setPassword} errorMessage={errorMessage} setIsLogged={setIsLogged} />
                 )}
                 {showRegisterForm  && (
                     <RegisterAccount setShowRegisterForm={setShowRegisterForm}/>
