@@ -1,22 +1,98 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { createStyles, Image, Text, Paper, Group, rem } from '@mantine/core';
+import {
+  IconSwimming,
+  IconBike,
+  IconRun,
+  IconChevronDown,
+  IconChevronUp,
+} from '@tabler/icons-react';
+import { Grid } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundImage: `linear-gradient(236.07deg,#f7ab35 .09%,#e8521e 102.47%)`,
+    borderRadius: theme.radius.md,
+    width: 320,
+    padding: theme.spacing.xl,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+
+  stat: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: theme.white,
+  },
+}));
 
 export default function Home() {
+  const { classes } = useStyles();
   return (
-    <div>
-      <h1>Hello, world!</h1>
-      <p>Welcome to your new single-page application, built with:</p>
-      <ul>
-        <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-        <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-        <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-      </ul>
-      <p>To help you get started, we have also set up:</p>
-      <ul>
-        <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-        <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-        <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-      </ul>
-      <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-    </div>
+    <Grid ml={20}>
+      <Grid.Col span={4}>
+        <h4>Próximos partidos</h4>
+        <div className={classes.root}>
+          <Group className='groupJornada' sx={{ flex: 1 }}>
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
+              <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/xbuyer-team.svg" alt="Random image" />
+            </Paper> 
+              VS
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Porcinos FC"}>
+            <Image maw={100} mx="auto" radius="md" src="	https://kingsleague.pro/wp-content/uploads/2022/11/saiyans-fc.svg" alt="Random image" />
+            </Paper>  
+          </Group>
+          <Group className='groupJornada' sx={{ flex: 1 }}>
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
+              <Image maw={100} mx="auto" radius="md" src="	https://kingsleague.pro/wp-content/uploads/2022/11/el-bbarrio.svg" alt="Random image" />
+            </Paper> 
+              VS
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Porcinos FC"}>
+            <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/jijantes-fc.svg" alt="Random image" />
+            </Paper>  
+          </Group>
+          <Group className='groupJornada' sx={{ flex: 1 }}>
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
+              <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/ultimate-mostoles.svg" alt="Random image" />
+            </Paper> 
+              VS
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Porcinos FC"}>
+            <Image maw={100} mx="auto" radius="md" src="	https://kingsleague.pro/wp-content/uploads/2022/11/aniquiladores.svg" alt="Random image" />
+            </Paper>  
+          </Group>
+          <Group className='groupJornada' sx={{ flex: 1 }}>
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
+              <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/kunisports.svg" alt="Random image" />
+            </Paper> 
+              VS
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Porcinos FC"}>
+            <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/rayo-barcelona.svg" alt="Random image" />
+            </Paper>  
+          </Group>
+          <Group className='groupJornada' sx={{ flex: 1 }}>
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
+              <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/pio.svg" alt="Random image" />
+            </Paper> 
+              VS
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Porcinos FC"}>
+            <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/1k.svg" alt="Random image" />
+            </Paper>  
+          </Group>
+          <Group className='groupJornada' sx={{ flex: 1 }}>
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
+              <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/porcinos-fc.svg" alt="Random image" />
+            </Paper> 
+              VS
+            <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Porcinos FC"}>
+            <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/12/los-troncos.png" alt="Random image" />
+            </Paper>  
+          </Group>
+        </div>
+      </Grid.Col>
+      <Grid.Col span={4}>2</Grid.Col>
+    </Grid>
   );
 }

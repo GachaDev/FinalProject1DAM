@@ -82,3 +82,7 @@ header {
 .logoApp {
   transition: 0.4s;
 }
+
+.groupJornada {
+  gap: 4rem !important;
+}
