@@ -39,9 +39,17 @@ export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmai
                 <Button onClick={handleSubmit} color='dark' fullWidth mt='xl'>
                     Iniciar sesión
                 </Button>
-                <Anchor onClick={() => {setIsLogged(true)}} size='sm' color='blue' align='center' component='button'>
-                    Entrar como invitado
-                </Anchor>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Anchor
+                        onClick={() => { setIsLogged(true) }}
+                        size='sm'
+                        mt='xs'
+                        color='blue'
+                        component='button'
+                    >
+                        Entrar como invitado
+                    </Anchor>
+                </div>
                 {errorMessage && (
                     <Text color='red' size='sm' align='center' mt={"md"}>
                     {errorMessage}
