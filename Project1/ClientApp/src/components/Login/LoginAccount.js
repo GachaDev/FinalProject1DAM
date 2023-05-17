@@ -13,7 +13,7 @@ import {
     Image
 } from '@mantine/core';
 
-export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmail, setPassword, errorMessage}) {  
+export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmail, setPassword, errorMessage, setIsLogged}) {  
     return (
         <div className='formulario'>
             <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
@@ -39,6 +39,17 @@ export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmai
                 <Button onClick={handleSubmit} color='dark' fullWidth mt='xl'>
                     Iniciar sesión
                 </Button>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Anchor
+                        onClick={() => { setIsLogged(true) }}
+                        size='sm'
+                        mt='xs'
+                        color='blue'
+                        component='button'
+                    >
+                        Entrar como invitado
+                    </Anchor>
+                </div>
                 {errorMessage && (
                     <Text color='red' size='sm' align='center' mt={"md"}>
                     {errorMessage}
