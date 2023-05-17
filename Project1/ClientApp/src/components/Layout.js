@@ -6,7 +6,7 @@ export default function Layout(props) {
   const links = [
     { link: '/', label: 'Home' },
     { link: '/FAQ', label: 'Preguntas' },
-    { link: '/contact', label: 'Contact' },
+    { link: '/clasificacion', label: 'Clasificación'},
   ];
 
   return (
