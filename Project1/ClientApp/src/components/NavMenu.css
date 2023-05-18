@@ -85,21 +85,34 @@ header {
 
 .match {
   display: flex;
-  flex: 1;
+  align-items: center;
+  justify-content: space-between;
   background: white;
   border-top: 1px solid #e8e8e8;
-  padding: 3px;
+  padding: 9px;
 }
 
-.match div {
+.match > div {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
 }
+
+.match .initials {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.match .initials.team2 {
+  justify-content: flex-start;
+}
+
 
 .containerCalendar {
   border-radius: 8px;
-  width: 320px;
+  width: 520px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
