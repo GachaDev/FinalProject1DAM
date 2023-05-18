@@ -11,13 +11,15 @@ export default function Match({ index, team1, team2, finished, goalsTeam1, goals
       <div className="logo">
         <Image maw={40} mx="auto" radius="md" src={team1} alt="Team 1" />
       </div>
-      <div className="score">
-        {finished ? (
+      {finished ? (
+        <div className="score">
           <span>{goalsTeam1}-{goalsTeam2}</span>
-        ) : (
+        </div>
+      ) : (
+        <div className='dateScore'>
           <span>{hour}</span>
-        )}
-      </div>
+        </div>
+      )}
       <div className="logo">
         <Image maw={40} mx="auto" radius="md" src={team2} alt="Team 2" />
       </div>
