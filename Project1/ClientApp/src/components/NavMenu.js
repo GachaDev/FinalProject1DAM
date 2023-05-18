@@ -5,9 +5,8 @@ import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram, IconBrandTwitch
 import './NavMenu.css';
 import { Link } from 'react-router-dom';
 
-
 const useStyles = createStyles((theme) => ({
-  inner: {
+  flexContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -18,28 +17,38 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  links: {
-    width: rem(300),
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '0 0 auto',
+  },
 
+  logo: {
+    width: rem(38),
+    height: rem(38),
+  },
+
+  navbarContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flex: '1 1 auto',
+    paddingLeft: rem(20),
+    paddingRight: rem(20),
     [theme.fn.smallerThan('sm')]: {
-      display: 'none',
+      width: 'auto',
     },
   },
 
-  social: {
-    width: rem(260),
-
+  linkContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: '0 0 auto',
+    marginLeft: 'auto',
     [theme.fn.smallerThan('sm')]: {
       width: 'auto',
       marginLeft: 'auto',
-    },
-  },
-
-  burger: {
-    marginRight: theme.spacing.md,
-
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
     },
   },
 
@@ -62,6 +71,16 @@ const useStyles = createStyles((theme) => ({
       color: 'white',
     },
   },
+
+  social: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+
+  socialIcon: {
+    marginRight: theme.spacing.xs,
+  },
 }));
 
 export default function NavMenu({ links }) {
@@ -82,47 +101,51 @@ export default function NavMenu({ links }) {
 
   return (
     <Header height={56} mb={20}>
-      <Container className={classes.inner}>
-        <Burger opened={opened} onClick={toggle} size="sm" className={classes.burger} />
-        <Group className={classes.links} spacing={5}>
-          {items}
-        </Group>
+      <Container className={classes.flexContainer}>
+        <div className={classes.logoContainer}>
           <a href="https://kingsleague.pro" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
             <Image
-              maw={38}
-              mx='auto'
-              className='logoApp'
-              src='https://kingsleague.pro/wp-content/uploads/2023/05/logo-kings.svg'
-              alt='Random image'
+              className={classes.logo}
+              src="https://kingsleague.pro/wp-content/uploads/2023/05/logo-kings.svg"
+              alt="Logo"
+              maw={30}
             />
-          </a>        
+          </a>
+        </div>
+        <div className={classes.navbarContainer}>
+          <Group spacing={5}>
+            {items}
+          </Group>
+        </div>
+        <div className={classes.linkContainer}>
           <Group spacing={0} className={classes.social} position="right" noWrap>
-          <ActionIcon variant="transparent" size="lg">
-            <a href="https://twitter.com/kingsleague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <IconBrandTwitter color='#1d9bf0' size="1.1rem" stroke={1.5} />
-            </a>
-          </ActionIcon>
-          <ActionIcon variant="transparent" size="lg">
-            <a href="https://youtube.com/@KingsLeagueOfficial" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <IconBrandYoutube color='#ff0000' size="1.1rem" stroke={1.5} />
-            </a>
-          </ActionIcon>
-          <ActionIcon variant="transparent" size="lg">
-            <a href="https://instagram.com/KingsLeague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <IconBrandInstagram color='#ee3d6c' size="1.1rem" stroke={1.5} />
-            </a>
-          </ActionIcon>
-          <ActionIcon variant="transparent" size="lg">
-            <a href="https://twitch.tv/KingsLeague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <IconBrandTwitch color='#a970ff' size="1.1rem" stroke={1.5} />
-            </a>
-          </ActionIcon>
-          <ActionIcon variant="transparent" size="lg">
-            <a href="https://tiktok.com/@KingsLeague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <IconBrandTiktok color='rgb(254 44 85)' size="1.1rem" stroke={1.5} />
-            </a>
-          </ActionIcon>
-        </Group>
+            <ActionIcon variant="transparent" size="lg" className={classes.socialIcon}>
+              <a href="https://twitter.com/kingsleague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                <IconBrandTwitter color="#1d9bf0" size="1.1rem" stroke={1.5} />
+              </a>
+            </ActionIcon>
+            <ActionIcon variant="transparent" size="lg" className={classes.socialIcon}>
+              <a href="https://youtube.com/@KingsLeagueOfficial" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                <IconBrandYoutube color="#ff0000" size="1.1rem" stroke={1.5} />
+              </a>
+            </ActionIcon>
+            <ActionIcon variant="transparent" size="lg" className={classes.socialIcon}>
+              <a href="https://instagram.com/KingsLeague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                <IconBrandInstagram color="#ee3d6c" size="1.1rem" stroke={1.5} />
+              </a>
+            </ActionIcon>
+            <ActionIcon variant="transparent" size="lg" className={classes.socialIcon}>
+              <a href="https://twitch.tv/KingsLeague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                <IconBrandTwitch color="#a970ff" size="1.1rem" stroke={1.5} />
+              </a>
+            </ActionIcon>
+            <ActionIcon variant="transparent" size="lg" className={classes.socialIcon}>
+              <a href="https://tiktok.com/@KingsLeague" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                <IconBrandTiktok color="rgb(254 44 85)" size="1.1rem" stroke={1.5} />
+              </a>
+            </ActionIcon>
+          </Group>
+        </div>
       </Container>
     </Header>
   );
