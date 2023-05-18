@@ -114,3 +114,29 @@ header {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 4px;
   padding: 5px;
 }
+
+.jornadaInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.jornadaInfo div {
+  display: flex;
+  flex-direction: column;
+}
+
+.jornadaInfo div span {
+  text-align: center;
+}
+
+.titleJornada {
+  font-weight: 500;
+}
+
+.dateJornada {
+  font-size: 12;
+}
