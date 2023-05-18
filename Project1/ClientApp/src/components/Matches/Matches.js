@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Title, Image, ActionIcon } from '@mantine/core';
+import { Title, ActionIcon } from '@mantine/core';
 import { ChevronLeft, ChevronRight } from 'tabler-icons-react';
 import Match from './Match';
 
@@ -19,7 +19,7 @@ export default function Matches() {
         <div className='jornadaInfo'>
         <ActionIcon variant="transparent"><ChevronLeft size="1rem" /></ActionIcon>
         <div>
-            <span className='titleJornada'>Jornada 3</span>
+            <span className='titleJornada'>Jornada 1</span>
             <span className='dateJornada' style={{ textAlign: 'center', fontSize: 12 }}>21 de Mayo de 2023</span>
         </div>
         <ActionIcon variant="transparent"><ChevronRight size="1rem" /></ActionIcon>

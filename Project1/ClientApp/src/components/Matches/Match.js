@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { Title, Image, ActionIcon } from '@mantine/core';
-import { ChevronLeft, ChevronRight } from 'tabler-icons-react';
+import { Image } from '@mantine/core';
 
 export default function Match({index, team1, team2, hour}) {
   return (
