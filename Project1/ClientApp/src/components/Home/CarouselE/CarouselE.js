@@ -44,7 +44,7 @@ function Card({ image, title }) {
         <Title order={3} className={classes.title}>
           {title}
         </Title>
-        <Text className={classes.date}>May 18, 2023</Text> {/* Aquí puedes cambiar la fecha actual */}
+        <Text className={classes.date}>May 18, 2023</Text>
       </div>
     </Paper>
   );
@@ -71,17 +71,17 @@ export default function CarouselE() {
     ));
   
     return (
-        <Carousel
-            withIndicators
-            height={450}
-            transition="slide"
-            breakpoints={[
-            { maxWidth: theme.breakpoints.md, slidesToShow: 2, slidesToScroll: 1 },
-            { maxWidth: theme.breakpoints.xl, slidesToShow: 3, slidesToScroll: 1 },
-            ]}
-        >
-            {slides}
-        </Carousel>
+      <Carousel
+        withIndicators
+        height={450}
+        transition="slide"
+        breakpoints={[
+        { maxWidth: theme.breakpoints.md, slidesToShow: 2, slidesToScroll: 1 },
+        { maxWidth: theme.breakpoints.xl, slidesToShow: 3, slidesToScroll: 1 },
+        ]}
+      >
+        {slides}
+      </Carousel>
     );
   }
   
