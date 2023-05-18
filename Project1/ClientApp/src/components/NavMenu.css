@@ -91,6 +91,12 @@ header {
   padding: 3px;
 }
 
+.match div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .containerCalendar {
   border-radius: 8px;
   width: 320px;
