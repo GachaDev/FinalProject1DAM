@@ -27,6 +27,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'column',
     backgroundColor: theme.white,
   },
+  
 }));
 
 export default function Home() {
@@ -34,8 +35,16 @@ export default function Home() {
   return (
     <Grid ml={20}>
       <Grid.Col span={4}>
-        <h4>Próximos partidos</h4>
+        
         <div className={classes.root}>
+          <h2 style={{textAlign:'center', backgroundColor:'black', color:'white',width:'100%'}}>PARTIDOS</h2>
+          <h4 style={{textAlign:'center'}}>Jornada 2
+            <span>
+              <img src='https://img.icons8.com/?size=512&id=18488&format=png' style={{width:'10%'}}></img>
+            </span>
+            <h6 style={{textAlign:'center'}}>21/05/2023</h6>
+          </h4>
+          
           <Group className='groupJornada' sx={{ flex: 1 }}>
             <Paper className={classes.stat} radius="md" shadow="md" p="xs" key={"Rayo de Barcelona FC"}>
               <Image maw={100} mx="auto" radius="md" src="https://kingsleague.pro/wp-content/uploads/2022/11/xbuyer-team.svg" alt="Random image" />
