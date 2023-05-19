@@ -62,26 +62,25 @@ const data = [
 ];
 
 export default function CarouselE() {
-    const theme = useMantineTheme();
-    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-    const slides = data.map((item) => (
-      <Carousel.Slide key={item.title}>
-        <Card {...item} />
-      </Carousel.Slide>
-    ));
-  
-    return (
-      <Carousel
-        withIndicators
-        height={450}
-        transition="slide"
-        breakpoints={[
-        { maxWidth: theme.breakpoints.md, slidesToShow: 2, slidesToScroll: 1 },
-        { maxWidth: theme.breakpoints.xl, slidesToShow: 3, slidesToScroll: 1 },
-        ]}
-      >
-        {slides}
-      </Carousel>
-    );
-  }
-  
+  const theme = useMantineTheme();
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const slides = data.map((item) => (
+    <Carousel.Slide key={item.title}>
+      <Card {...item} />
+    </Carousel.Slide>
+  ));
+
+  return (
+    <Carousel miw={800} maw={800} mx="auto"
+      withIndicators
+      height={450}
+      transition="slide"
+      breakpoints={[
+        { maxWidth: theme.breakpoints.md, slidesToShow: 1, slidesToScroll: 1 },
+        { maxWidth: theme.breakpoints.xl, slidesToShow: 1, slidesToScroll: 1 },
+      ]}
+    >
+      {slides}
+    </Carousel>
+  );
+}
