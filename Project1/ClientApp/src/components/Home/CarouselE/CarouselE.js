@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { createStyles, Paper, Text, Title, Button, useMantineTheme, rem } from '@mantine/core';
@@ -59,11 +60,30 @@ const data = [
     image: 'https://kingsleague.pro/wp-content/uploads/2023/05/16831283669188.jpg',
     title: 'Djibril Cissé, destacado en las compras para la 2ª jornada',
   },
+  {
+    image: 'https://kingsleague.pro/wp-content/uploads/2023/05/16831283669188.jpg',
+    title: 'Djibril Cissé, destacado en las compras para la 2ª jornada',
+  },
 ];
 
 export default function CarouselE() {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const [width, setWidth] = useState(mobile ? 600 : 800);
+  const [forceUpdate, setForceUpdate] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(mobile ? 600 : 800);
+      setForceUpdate(prevState => !prevState);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [mobile]);
+
   const slides = data.map((item) => (
     <Carousel.Slide key={item.title}>
       <Card {...item} />
@@ -71,16 +91,19 @@ export default function CarouselE() {
   ));
 
   return (
-    <Carousel miw={800} maw={800} mx="auto"
-      withIndicators
-      height={450}
-      transition="slide"
-      breakpoints={[
-        { maxWidth: theme.breakpoints.md, slidesToShow: 1, slidesToScroll: 1 },
-        { maxWidth: theme.breakpoints.xl, slidesToShow: 1, slidesToScroll: 1 },
-      ]}
-    >
-      {slides}
-    </Carousel>
+    <div key={forceUpdate}>
+      <Carousel
+        mx="auto"
+        withIndicators
+        height={450}
+        transition="slide"
+        breakpoints={[
+          { maxWidth: theme.breakpoints.md, slidesToShow: 1, slidesToScroll: 1 },
+          { maxWidth: theme.breakpoints.xl, slidesToShow: 1, slidesToScroll: 1 },
+        ]}
+      >
+        {slides}
+      </Carousel>
+    </div>
   );
 }
