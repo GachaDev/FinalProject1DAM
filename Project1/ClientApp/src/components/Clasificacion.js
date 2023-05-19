@@ -3,8 +3,6 @@ import { Avatar, Badge, Table, Group, Text, Select, ScrollArea } from '@mantine/
 
 //Filas de la tabla 
 
-
-
 const data = [
   {
     name: '1k',
@@ -126,13 +124,12 @@ const data = [
     gf:4,
     gc:10
   }
-];
-
+]
 export default function Clasificacion() {
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td>
-        <h6>{item.pos}</h6>
+        <h6 className={item.pos==1? 'highlight' : ''} >{item.pos}</h6>
       </td>
       <td className='tdimg'>
         <img src={item.shield} className='shieldTeam'></img>
@@ -149,7 +146,7 @@ export default function Clasificacion() {
       <td>
         <h6>{item.defeat}</h6>
       </td>
-      <td>
+      <td className='gf'>
         <h6>{item.gf}</h6>
       </td>
       <td>

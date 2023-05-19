@@ -174,8 +174,12 @@ header {
 
 .tdimg{
   width: 10%;
+  vertical-align: middle;
 }
 .tdteam{
   width: 20%;
-
 }
+.gf{
+  width: 10%;
+}
+
