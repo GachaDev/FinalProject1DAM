@@ -2,33 +2,11 @@ import Matches from './Matches/Matches';
 import CarouselE from './CarouselE/CarouselE'
 import { useMediaQuery } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
-import { createStyles, Paper, Text, Title, Image, rem, Space } from '@mantine/core';
-
-const useStyles = createStyles((theme) => ({
-  title: {
-    position: 'absolute',
-    fontFamily: `Greycliff CF ${theme.fontFamily}`,
-    fontWeight: 900,
-    color: theme.white,
-    lineHeight: 1.5,
-    fontSize: "12px",
-    marginLeft: 2
-  },
-
-  category: {
-    fontFamily: `Greycliff CF ${theme.fontFamily}`,
-    fontWeight: 900,
-    color: theme.white,
-    lineHeight: 1.2,
-    fontSize: "25px",
-    marginLeft: 2
-  },
-}));
+import { createStyles, Paper, Text, Title, Image, rem } from '@mantine/core';
 
 export default function Home() {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-  const { classes } = useStyles();
   return (
     <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', margin: 40, gap: 20 }}>
       <div style={{ flex: '1', minWidth: 0 }}>
@@ -47,14 +25,14 @@ export default function Home() {
             >
               <div style={{display: "flex", flexDirection: "row"}}>
                 <div>
-                  <Text className={classes.category} size="xs">
+                  <Text className={'categoryCard'} size="xs">
                     MVP
                   </Text>
-                  <Text order={5} className={classes.title}>
+                  <Text order={5} className={'titleCard'}>
                     Jornada 2
                   </Text>
                   <p></p>
-                  <Title order={4} className={classes.title}>
+                  <Title order={4} className={'titleCard'}>
                     Joan Verdú
                   </Title>
                 </div>
@@ -74,14 +52,14 @@ export default function Home() {
             >
               <div style={{display: "flex", flexDirection: "row"}}>
                 <div>
-                  <Text className={classes.category} size="xs">
+                  <Text className={'categoryCard'} size="xs">
                     5
                   </Text>
-                  <Text order={5} className={classes.title}>
+                  <Text order={5} className={'titleCard'}>
                     Goles
                   </Text>
                   <p></p>
-                  <Title order={4} className={classes.title}>
+                  <Title order={4} className={'titleCard'}>
                     Granero
                   </Title>
                 </div>
@@ -101,14 +79,14 @@ export default function Home() {
             >
               <div style={{display: "flex", flexDirection: "row"}}>
                 <div>
-                  <Text className={classes.category} size="xs">
+                  <Text className={'categoryCard'} size="xs">
                     3
                   </Text>
-                  <Text order={5} className={classes.title}>
+                  <Text order={5} className={'titleCard'}>
                     Asistencias
                   </Text>
                   <p></p>
-                  <Title order={4} className={classes.title}>
+                  <Title order={4} className={'titleCard'}>
                     Ricardo
                   </Title>
                 </div>
