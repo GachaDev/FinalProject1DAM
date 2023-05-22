@@ -167,11 +167,21 @@ header {
   background-color: #e3e3e3;
 }
 
-.cardMain{
+.cardMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-size: cover;
+  background-position: center;
   padding: 0 !important;
-  height: 0 !important;
-  width: auto;
+  height: 20rem;
 }
+
+.imageCard{
+  height: 20rem !important;
+}
+
 
 /*Escudos de los equipos de clasificación*/
 .shieldTeam{
