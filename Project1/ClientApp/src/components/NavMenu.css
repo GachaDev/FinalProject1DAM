@@ -167,6 +167,12 @@ header {
   background-color: #e3e3e3;
 }
 
+.cardMain{
+  padding: 0 !important;
+  height: 0 !important;
+  width: auto;
+}
+
 /*Escudos de los equipos de clasificación*/
 .shieldTeam{
   width: 20%;
