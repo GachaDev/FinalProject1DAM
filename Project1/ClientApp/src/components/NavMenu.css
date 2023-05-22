@@ -183,7 +183,6 @@ header {
 }
 
 .titleCard{
-  position: absolute;
   font-family: Greycliff CF -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
   font-weight: 900;
   color: #fff;
@@ -199,6 +198,21 @@ header {
   line-height: 1.2;
   font-size: 25px;
   margin-left: 2px;
+}
+
+.homeIzquierda {
+  flex: 1;
+  min-width: 0;
+}
+
+.homeDerecha {
+  flex: 2;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.cardPlayer {
+  flex: 1;
 }
 
 /*Escudos de los equipos de clasificación*/
