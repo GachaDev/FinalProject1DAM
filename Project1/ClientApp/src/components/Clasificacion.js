@@ -125,32 +125,56 @@ const data = [
     gc:10
   }
 ]
+
+const BarWithColor = ({ text }) => {
+  let barColor = '';
+  
+  if (text >= 2 && text <= 4) {
+    barColor = 'orange';
+  } else if (text >= 5 && text <= 10) {
+    barColor = 'red';
+  } else if (text === 1) {
+    barColor = 'green';
+  }else if (text > 10){
+    barColor = 'white'
+  }
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      {barColor && <div style={{ backgroundColor: barColor, height: '30px', width: '10px', marginRight: '10px' }} />}
+      <span>{text}</span>
+    </div>
+  );
+};
+
 export default function Clasificacion() {
   const rows = data.map((item) => (
     <tr key={item.name}>
-      <td>
-        <h6 className={item.pos==1? 'highlight' : ''} >{item.pos}</h6>
+      <td> 
+        <h7>
+          <BarWithColor text={item.pos}/>
+         </h7>
       </td>
       <td className='tdimg'>
-        <img src={item.shield} className='shieldTeam'></img>
+        <img src={item.shield} className='shieldTeam' style={{marginLeft:'6%'}}></img>
       </td>
       <td className='tdteam'>
-        <h6>{item.name}</h6>
+        <h7>{item.name}</h7>
       </td>
       <td>
-        <h6>{item.point}</h6>
+        <h7>{item.point}</h7>
       </td>
       <td>
-        <h6>{item.victory}</h6>
+        <h7>{item.victory}</h7>
       </td>
       <td>
-        <h6>{item.defeat}</h6>
+        <h7>{item.defeat}</h7>
       </td>
       <td className='gf'>
-        <h6>{item.gf}</h6>
+        <h7>{item.gf}</h7>
       </td>
       <td>
-        <h6>{item.gc}</h6>
+        <h7>{item.gc}</h7>
       </td>
     </tr>
   ));
