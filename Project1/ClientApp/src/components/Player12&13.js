@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react';
 import { Button } from '@mantine/core';
-import { Text, Paper } from '@mantine/core';
 
 const data = [
   {
@@ -102,37 +101,30 @@ const data = [
 ];
 
 function Buttonn() {
-  const [mostrarLista, setMostrarLista] = useState(false);
+  const [backgroundColor, setBackgroundColor]=useState('light');
   const[player12and13,setplayer12and13]=useState(false);
 
-  const handleClick = () => {
-    setMostrarLista(!mostrarLista);
+  const handleClickColor = (color) => {
+    if (backgroundColor === color) {
+      setBackgroundColor(null); 
+    } else {
+      setBackgroundColor(color);
+    }
   };
+
+  const updateBackground=()=>{
+    const newColor= backgroundColor==='light'?'black':'light'
+  }
   const handleClickPlayer=()=>{
     setplayer12and13(!player12and13)
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-      <Button variant="light" color="orange" radius="lg" size="lg">
+      <Button variant="light" color="orange" radius="lg" size="lg"
+          updateBackground={updateBackground}>
         Todos
       </Button>
-      <div>
-      <Button variant="light" color="orange" radius="lg" size="lg" onClick={handleClick}>Equipos</Button>
-      {mostrarLista && (
-        <ul>
-          <li>1K FC</li>
-          <li>Rayo de Barcelona</li>
-          <li>PIO FC</li>
-          <li>Ultimate Móstoles</li>
-          <li>Kunisports</li>
-          <li>Porcinos FC</li>
-          <li>El Barrio</li>
-          <li>xBuyer Team</li>
-          <li>Los Troncos FC</li>
-        </ul>
-      )}
-      </div>
       <div>
       <Button variant="light" color="orange" radius="lg" size="lg" onClick={handleClickPlayer}>
         Jugador
@@ -162,7 +154,7 @@ function Paperr({ data }) {
               <h5 style={{ color: 'white' }}>{data.team}</h5>
             </div>
             <div>
-              <span style={{ backgroundColor: 'black', color: 'orange', fontFamily: 'monospace', fontSize:'20px'}}>{data.number}</span>
+              <span style={{ backgroundColor: 'black', color: 'orange', fontFamily: 'monospace', fontSize:'20px',padding:'3px'}}>{data.number}</span>
             </div>
           </div>
           <div style={{ display: 'flex', height: '30%', width: '100%', color: 'white', marginTop: '10px' }}>

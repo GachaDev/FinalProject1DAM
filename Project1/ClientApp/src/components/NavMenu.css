@@ -230,3 +230,7 @@ header {
 .gf{
   width: 10%;
 }
+
+.Button.handleClickPlayer:hover{
+  background-color: #e8521e;
+}
