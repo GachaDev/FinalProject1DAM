@@ -203,12 +203,18 @@ header {
 .homeIzquierda {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .homeDerecha {
   flex: 2;
   max-width: 100%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .cardPlayer {
