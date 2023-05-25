@@ -5,7 +5,7 @@ import { Avatar, Badge, Table, Group, Text, Select, ScrollArea } from '@mantine/
 
 const data = [
   {
-    name: '1k',
+    name: '1K',
     pos:1,
     shield: 'https://kingsleague.pro/wp-content/uploads/2022/11/1k.svg',
     point:6,
