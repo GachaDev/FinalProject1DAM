@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@mantine/core';
 
 const data = [
@@ -106,7 +106,7 @@ function Buttonn() {
 
   const handleClick = (id) => {
     setIsClicked(id)
-    if(id=='Jugador'){
+    if(id==='Jugador'){
       setplayer12and13(!player12and13)
     }else{
       setplayer12and13(false)
@@ -115,11 +115,11 @@ function Buttonn() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-      <Button variant="light" color={isClicked=='Todos'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Todos')}}>
+      <Button variant="light" color={isClicked==='Todos'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Todos')}}>
         Todos
       </Button>
       <div>
-      <Button variant="light" color={isClicked=='Jugador'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Jugador')}}>
+      <Button variant="light" color={isClicked==='Jugador'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Jugador')}}>
         Jugador
       </Button>
       {player12and13 && (
@@ -138,11 +138,11 @@ function Paperr({ data }) {
     <div style={{ display:'flex'}}>
       <div style={{ display: 'flex', background:'linear-gradient(236.07deg,#f7ab35 .09%,#e8521e 102.47%)', backgroundSize: '100%', width: '100%', flexDirection: 'row' }}>
         <div style={{width:'100%'}}>
-          <img src={data.player} style={{ width: '100%', height: 'auto', maxWidth: '150px', maxHeight: '200px', objectFit: 'cover' }}></img>
+          <img src={data.player} style={{ width: '100%', height: 'auto', maxWidth: '150px', maxHeight: '200px', objectFit: 'cover' }} alt={'Player'}></img>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', width:'200%' }}>
           <div style={{ display: 'flex', flexDirection: 'row', width: '20%', gap: '30%', alignItems: 'center', marginTop: '3%', height: '30%' }}>
-            <img src={data.shield} style={{ width: '50%', height: 'auto', maxWidth: '150px', maxHeight: '200px', objectFit: 'cover' }}></img>
+            <img src={data.shield} style={{ width: '50%', height: 'auto', maxWidth: '150px', maxHeight: '200px', objectFit: 'cover' }} alt={'Escudo'}></img>
             <div style={{ minWidth: 'max-content' }}>
               <h5 style={{ color: 'white' }}>{data.team}</h5>
             </div>

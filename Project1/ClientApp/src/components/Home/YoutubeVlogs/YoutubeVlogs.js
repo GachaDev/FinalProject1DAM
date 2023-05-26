@@ -1,6 +1,5 @@
-import ReactPlayer from 'react-player';
 import { IconBrandYoutube } from '@tabler/icons-react';
-import { SimpleGrid, Card, Text, AspectRatio } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import CardVlog from './CardVlog';
 
 const mockdata = [

@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react';
-import { Avatar, Badge, Table, Group, Text, Select, ScrollArea } from '@mantine/core';
+import { Table, ScrollArea } from '@mantine/core';
 
 //Filas de la tabla 
 
@@ -156,7 +155,7 @@ export default function Clasificacion() {
          </h7>
       </td>
       <td className='tdimg'>
-        <img src={item.shield} className='shieldTeam' style={{marginLeft:'6%'}}></img>
+        <img src={item.shield} className='shieldTeam' style={{marginLeft:'6%'}} alt='Escudo'></img>
       </td>
       <td className='tdteam'>
         <h7>{item.name}</h7>

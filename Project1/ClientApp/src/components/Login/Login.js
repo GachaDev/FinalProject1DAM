@@ -1,18 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import RegisterAccount from './RegisterAccount';
 import LoginAccount from './LoginAccount';
 import { UseAdmin } from '../../Zustand/UseAdmin';
 import {
-    TextInput,
-    PasswordInput,
-    Checkbox,
-    Anchor,
-    Paper,
     Title,
-    Text,
     Container,
-    Group,
-    Button,
     Image
 } from '@mantine/core';
 
@@ -22,9 +14,8 @@ export default function Login({ setIsLogged }) {
     const [openSound, setOpenSound] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const { Admin, setAdmin } = UseAdmin();
+    const { setAdmin } = UseAdmin();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -43,7 +34,6 @@ export default function Login({ setIsLogged }) {
     };
     
     useEffect(() => {
-        console.log(Admin)
         if (!openSound) {
             const audio = new Audio('https://cdn.discordapp.com/attachments/919641744704954461/1106633644933648487/SnapSave_mp3cut.net.mp3');
             audio.play();
@@ -53,7 +43,7 @@ export default function Login({ setIsLogged }) {
           setShowLoginForm(true);
         }, 2050);
         return () => clearTimeout(timeoutId);
-    }, [showLoginForm]);  
+    }, [showLoginForm, openSound]);  
 
     return (
         <div className='logIn'>

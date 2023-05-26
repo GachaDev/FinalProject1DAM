@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { createStyles, Header, Group, ActionIcon, Container, Burger, rem, Image } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { createStyles, Header, Group, ActionIcon, Container, rem, Image } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram, IconBrandTwitch, IconBrandTiktok } from '@tabler/icons-react';
 import './NavMenu.css';
 import { Link } from 'react-router-dom';
@@ -84,7 +83,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function NavMenu({ links }) {
-  const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 

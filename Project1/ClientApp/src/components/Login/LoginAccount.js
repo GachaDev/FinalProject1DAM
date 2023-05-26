@@ -1,16 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
 import {
     TextInput,
     PasswordInput,
-    Checkbox,
-    Anchor,
     Paper,
-    Title,
     Text,
-    Container,
-    Group,
     Button,
-    Image
+    Anchor,
 } from '@mantine/core';
 
 export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmail, setPassword, errorMessage, setIsLogged}) {  
