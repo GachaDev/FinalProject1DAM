@@ -1,7 +1,7 @@
 import Home from "./components/Home/Home";
-import FAQ from "./components/Faq";
-import Clasificacion from './components/Clasificacion'
-import Player1213 from "./components/Player12&13";
+import FAQ from "./components/Faq/Faq";
+import Clasificacion from './components/Clasificacion/Clasificacion'
+import Player1213 from "./components/Player12&13/Player12&13";
 
 const AppRoutes = [
   {

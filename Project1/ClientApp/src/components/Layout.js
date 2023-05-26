@@ -1,4 +1,4 @@
-import NavMenu from './NavMenu';
+import NavMenu from './NavMenu/NavMenu';
 
 export default function Layout(props) {
   const links = [
