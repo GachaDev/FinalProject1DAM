@@ -236,6 +236,19 @@ header {
   flex: 1;
 }
 
+.cardNavarrosa {
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 4px;
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.titleNavarrosa {
+  font-family: Greycliff CF -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-weight: 600;
+}
+
 /*Escudos de los equipos de clasificación*/
 .shieldTeam{
   width: 20%;
