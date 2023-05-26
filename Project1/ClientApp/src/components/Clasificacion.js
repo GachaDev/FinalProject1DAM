@@ -184,7 +184,7 @@ export default function Clasificacion() {
       <Table miw={800} verticalSpacing="sm">
         <thead>
           <tr>
-            <th>POS</th>
+            <th style={{width:'8%'}}>POS</th>
             <th>ESCUDO</th>
             <th>EQUIPO</th>
             <th>PTS</th>

@@ -101,32 +101,25 @@ const data = [
 ];
 
 function Buttonn() {
-  const [backgroundColor, setBackgroundColor]=useState('light');
-  const[player12and13,setplayer12and13]=useState(false);
+  const [player12and13, setplayer12and13]=useState(false);
+  const [isClicked, setIsClicked] = useState('Todos');
 
-  const handleClickColor = (color) => {
-    if (backgroundColor === color) {
-      setBackgroundColor(null); 
-    } else {
-      setBackgroundColor(color);
+  const handleClick = (id) => {
+    setIsClicked(id)
+    if(id=='Jugador'){
+      setplayer12and13(!player12and13)
+    }else{
+      setplayer12and13(false)
     }
-  };
-
-  const updateBackground=()=>{
-    const newColor= backgroundColor==='light'?'black':'light'
-  }
-  const handleClickPlayer=()=>{
-    setplayer12and13(!player12and13)
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-      <Button variant="light" color="orange" radius="lg" size="lg"
-          updateBackground={updateBackground}>
+      <Button variant="light" color={isClicked=='Todos'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Todos')}}>
         Todos
       </Button>
       <div>
-      <Button variant="light" color="orange" radius="lg" size="lg" onClick={handleClickPlayer}>
+      <Button variant="light" color={isClicked=='Jugador'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Jugador')}}>
         Jugador
       </Button>
       {player12and13 && (
