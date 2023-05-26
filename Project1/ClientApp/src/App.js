@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import LoggedInComponent from './components/LoggedInComponent';
 import Login from './components/Login/Login';
 import { CSSTransition } from 'react-transition-group';
-import './fade.css';
-
 
 export default function App() {
   const [isLogged, setIsLogged] = useState(false);

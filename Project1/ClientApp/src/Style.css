@@ -249,6 +249,19 @@ header {
   font-weight: 600;
 }
 
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in-out;
+}
+
+.fade-exit {
+  opacity: 0;
+}
+
 /*Escudos de los equipos de clasificación*/
 .shieldTeam{
   width: 20%;
