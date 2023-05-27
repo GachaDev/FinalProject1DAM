@@ -330,6 +330,12 @@ header {
   justify-content: flex-end;
 }
 
+.youtubeVlogs {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 /*Escudos de los equipos de clasificación*/
 .shieldTeam{
   width: 20%;

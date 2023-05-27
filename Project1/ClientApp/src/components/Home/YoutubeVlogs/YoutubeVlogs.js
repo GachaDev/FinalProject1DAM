@@ -1,6 +1,7 @@
 import { IconBrandYoutube } from '@tabler/icons-react';
 import { SimpleGrid } from '@mantine/core';
 import CardVlog from './CardVlog';
+import SocialIcon from '../../NavMenu/SocialIcon';
 
 const mockdata = [
   {
@@ -19,7 +20,10 @@ export default function YoutubeVlogs() {
   ));
   return (
     <div>
-        <h5>Ultimos vlogs de Navarrosa <IconBrandYoutube color="#ff0000" size="1.6rem" stroke={1.5} /></h5>
+        <div className='youtubeVlogs'>
+          <h5>Ultimos vlogs de Navarrosa</h5>
+          <SocialIcon href="https://youtube.com/@KingsLeagueOfficial" target="_blank" rel="noopener" color="#ff0000" size="1.6rem" stroke={1.5} icon={IconBrandYoutube} />
+        </div>
         <SimpleGrid cols={2} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
             {cards}
         </SimpleGrid>
