@@ -232,6 +232,10 @@ header {
   gap: 20px;
 }
 
+.socialIcon {
+  margin-right: 0.625rem;
+}
+
 .cardPlayer {
   flex: 1;
 }
@@ -260,6 +264,70 @@ header {
 
 .fade-exit {
   opacity: 0;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3.5rem;
+  max-width: 115rem;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.navbarContainer {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.linkContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+@media (max-width: 55rem) {
+  .linkContainer {
+    display: none;
+  }
+}
+
+.link {
+  display: block;
+  line-height: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(255 255 255 / 65%);
+  &:hover {
+    color: white;
+  }
+}
+
+.linkActive {
+  &, &:hover {
+    color: white;
+  }
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /*Escudos de los equipos de clasificación*/
