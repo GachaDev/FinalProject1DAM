@@ -100,7 +100,7 @@ const data = [
   }
 ];
 
-function Buttonn() {
+function Buttonn(setShowPlayer12,setShowPlayer13) {
   const [player12and13, setplayer12and13]=useState(false);
   const [isClicked, setIsClicked] = useState('Todos');
 
@@ -112,6 +112,13 @@ function Buttonn() {
       setplayer12and13(false)
     }
   }
+  const handlePlayer12Click = () => {
+    setShowPlayer12(!setShowPlayer12)
+  };
+
+  const handlePlayer13Click = () => {
+    setShowPlayer13(!setShowPlayer13);
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
@@ -124,8 +131,8 @@ function Buttonn() {
       </Button>
       {player12and13 && (
         <ul>
-          <li>Jugador 12</li>
-          <li>Jugador 13</li>
+          <li onClick={handlePlayer12Click}>Jugador 12</li>
+          <li onClick={handlePlayer13Click}>Jugador 13</li>
         </ul>
       )}
       </div>
@@ -133,7 +140,7 @@ function Buttonn() {
   );
 }
 
-function Paperr({ data }) {
+function Paperr({ data,showPlayer12,showPlayer13}) {
   return (
     <div style={{ display:'flex'}}>
       <div style={{ display: 'flex', background:'linear-gradient(236.07deg,#f7ab35 .09%,#e8521e 102.47%)', backgroundSize: '100%', width: '100%', flexDirection: 'row' }}>
@@ -164,16 +171,19 @@ function Paperr({ data }) {
 
 export default function Player1213() {
   const uniqueData = [...new Map(data.map((item) => [item.namePlayer, item])).values()];
+  const [showPlayer12, setShowPlayer12] = useState(false);
+  const [showPlayer13, setShowPlayer13] = useState(false);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', margin: '5%', gap: '20px' }}>
       <h1 style={{fontFamily: "Archivo Narrow"}}>Jugadores 12 y 13</h1>
       <div>
-        <Buttonn />
+        <Buttonn setShowPlayer12={setShowPlayer12} setShowPlayer13={setShowPlayer13}/>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns:'repeat(3,1fr)',gap:'20px' }}>
         {uniqueData.map((player, index) => (
-          <Paperr key={index} data={player} />
+          <Paperr key={index} data={player} showPlayer12={showPlayer12} showPlayer13={showPlayer13}
+          />
         ))}
       </div>
     </div>
