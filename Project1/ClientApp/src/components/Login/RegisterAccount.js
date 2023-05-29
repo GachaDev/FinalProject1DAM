@@ -1,23 +1,17 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     TextInput,
     PasswordInput,
-    Checkbox,
     Anchor,
     Paper,
-    Title,
     Text,
-    Container,
-    Group,
-    Button,
-    Image
+    Button
 } from '@mantine/core';
 
 export default function RegisterAccount({setShowRegisterForm}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
   
     const createAccount = async (event) => {
         event.preventDefault();
@@ -79,11 +73,6 @@ export default function RegisterAccount({setShowRegisterForm}) {
                 <Button color='dark' onClick={createAccount} fullWidth mt='xl'>
                     Crear cuenta
                 </Button>
-                {errorMessage && (
-                    <Text color='red' size='sm' align='center' mt={5}>
-                    {errorMessage}
-                    </Text>
-                )}
             </Paper>
         </div>
     );
