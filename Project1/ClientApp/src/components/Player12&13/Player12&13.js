@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@mantine/core';
+import { NativeSelect } from '@mantine/core';
 
 const data = [
   {
@@ -100,47 +100,7 @@ const data = [
   }
 ];
 
-function Buttonn(setShowPlayer12,setShowPlayer13) {
-  const [player12and13, setplayer12and13]=useState(false);
-  const [isClicked, setIsClicked] = useState('Todos');
-
-  const handleClick = (id) => {
-    setIsClicked(id)
-    if(id==='Jugador'){
-      setplayer12and13(!player12and13)
-    }else{
-      setplayer12and13(false)
-    }
-  }
-  const handlePlayer12Click = () => {
-    setShowPlayer12(!setShowPlayer12)
-  };
-
-  const handlePlayer13Click = () => {
-    setShowPlayer13(!setShowPlayer13);
-  };
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-      <Button variant="light" color={isClicked==='Todos'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Todos')}}>
-        Todos
-      </Button>
-      <div>
-      <Button variant="light" color={isClicked==='Jugador'?'dark':'orange'} radius="lg" size="lg" onClick={()=>{handleClick('Jugador')}}>
-        Jugador
-      </Button>
-      {player12and13 && (
-        <ul>
-          <li onClick={handlePlayer12Click}>Jugador 12</li>
-          <li onClick={handlePlayer13Click}>Jugador 13</li>
-        </ul>
-      )}
-      </div>
-    </div>
-  );
-}
-
-function Paperr({ data,showPlayer12,showPlayer13}) {
+function Paperr({ data}) {
   return (
     <div style={{ display:'flex'}}>
       <div style={{ display: 'flex', background:'linear-gradient(236.07deg,#f7ab35 .09%,#e8521e 102.47%)', backgroundSize: '100%', width: '100%', flexDirection: 'row' }}>
@@ -171,19 +131,24 @@ function Paperr({ data,showPlayer12,showPlayer13}) {
 
 export default function Player1213() {
   const uniqueData = [...new Map(data.map((item) => [item.namePlayer, item])).values()];
-  const [showPlayer12, setShowPlayer12] = useState(false);
-  const [showPlayer13, setShowPlayer13] = useState(false);
+  const [value, setValue] = useState('Todos');
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', margin: '5%', gap: '20px' }}>
       <h1 style={{fontFamily: "Archivo Narrow"}}>Jugadores 12 y 13</h1>
       <div>
-        <Buttonn setShowPlayer12={setShowPlayer12} setShowPlayer13={setShowPlayer13}/>
+        <NativeSelect
+          maw={'25%'}
+          value={value}
+          onChange={(event) => setValue(event.currentTarget.value)}
+          data={['Todos','Jugador 12', 'Jugador 13']}
+        />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns:'repeat(3,1fr)',gap:'20px' }}>
         {uniqueData.map((player, index) => (
-          <Paperr key={index} data={player} showPlayer12={showPlayer12} showPlayer13={showPlayer13}
-          />
+          (value === 'Todos' || value === 'Jugador ' + player.number) ? (
+            <Paperr key={index} data={player} />
+          ) : null
         ))}
       </div>
     </div>

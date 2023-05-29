@@ -79,7 +79,7 @@ export default function FAQ() {
                 <Accordion.Panel>{placeholder[6]}</Accordion.Panel>
               </Accordion.Item>
 
-              <Accordion.Item className={classes.item} value="matchs">
+              <Accordion.Item className={classes.item} value="formats">
                 <Accordion.Control>¿Cuál es el formato de la competición?</Accordion.Control>
                 <Accordion.Panel>{placeholder[7]}</Accordion.Panel>
               </Accordion.Item>
