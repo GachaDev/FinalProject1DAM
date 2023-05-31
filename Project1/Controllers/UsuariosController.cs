@@ -23,113 +23,29 @@ namespace Project1.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuarios>>> Getusuarios()
+        public IActionResult ExecuteQuery()
         {
-            if (_context.usuarios == null)
-          {
-              return NotFound();
-          }
-            return await _context.usuarios.ToListAsync();
-        }
+            string query = "SELECT * FROM usuarios";
 
-        // GET: api/Usuarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuarios>> GetUsuarios(int id)
-        {
-          if (_context.usuarios == null)
-          {
-              return NotFound();
-          }
-            var usuarios = await _context.usuarios.FindAsync(id);
+            var result = _context.usuarios.FromSqlRaw(query).ToList();
 
-            if (usuarios == null)
-            {
-                return NotFound();
-            }
-
-            return usuarios;
-        }
-
-        // PUT: api/Usuarios/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuarios(int id, Usuarios usuarios)
-        {
-            if (id != usuarios.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(usuarios).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsuariosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Usuarios
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Usuarios>> PostUsuarios(Usuarios usuarios)
-        {
-          if (_context.usuarios == null)
-          {
-              return Problem("Entity set 'AppDbContext.usuarios'  is null.");
-          }
-            _context.usuarios.Add(usuarios);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsuarios", new { id = usuarios.id }, usuarios);
-        }
-
-        // DELETE: api/Usuarios/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuarios(int id)
-        {
-            if (_context.usuarios == null)
-            {
-                return NotFound();
-            }
-            var usuarios = await _context.usuarios.FindAsync(id);
-            if (usuarios == null)
-            {
-                return NotFound();
-            }
-
-            _context.usuarios.Remove(usuarios);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(result);
         }
 
         [HttpGet("{mail}/{password}")]
         public ActionResult<List<Usuarios>> GetLogIn(string mail, string password)
         {
+            string query = "SELECT * FROM usuarios WHERE mail = {0} AND password = {1}";
+            var usuarios = _context.usuarios.FromSqlRaw(query, mail, password).ToList();
 
-            var usuarios = _context.usuarios.Where(usuario => usuario.mail.Equals(mail) && usuario.password.Equals(password)).ToList();
-
-            if (usuarios == null)
+            if (usuarios == null || usuarios.Count == 0)
             {
                 return NotFound();
             }
 
             return usuarios;
         }
-        
+
         [HttpPost("register")]
         public async Task<ActionResult<Usuarios>> Register([FromBody] Usuarios usuario)
         {
@@ -138,16 +54,13 @@ namespace Project1.Controllers
                 return BadRequest("No se ha proporcionado ningún usuario.");
             }
 
-            _context.usuarios.Add(usuario);
+            string query = "INSERT INTO usuarios (mail, password, name) VALUES ({0}, {1}, {2})";
+            _context.Database.ExecuteSqlRaw(query, usuario.mail, usuario.password, usuario.name);
+
             await _context.SaveChangesAsync();
 
             return Ok("Usuario creado con éxito");
         }
 
-
-        private bool UsuariosExists(int id)
-        {
-            return (_context.usuarios?.Any(e => e.id == id)).GetValueOrDefault();
-        }
     }
 }
