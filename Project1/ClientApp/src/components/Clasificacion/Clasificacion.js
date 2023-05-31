@@ -1,7 +1,5 @@
 import { Table, ScrollArea } from '@mantine/core';
 
-//Filas de la tabla 
-
 const data = [
   {
     name: '1K',
@@ -150,30 +148,30 @@ export default function Clasificacion() {
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td> 
-        <h7>
+        <h6>
           <BarWithColor text={item.pos}/>
-         </h7>
+         </h6>
       </td>
       <td className='tdimg'>
         <img src={item.shield} className='shieldTeam' style={{marginLeft:'6%'}} alt='Escudo'></img>
       </td>
       <td className='tdteam'>
-        <h7>{item.name}</h7>
+        <h6>{item.name}</h6>
       </td>
       <td>
-        <h7>{item.point}</h7>
+        <h6>{item.point}</h6>
       </td>
       <td>
-        <h7>{item.victory}</h7>
+        <h6>{item.victory}</h6>
       </td>
       <td>
-        <h7>{item.defeat}</h7>
+        <h6>{item.defeat}</h6>
       </td>
       <td className='gf'>
-        <h7>{item.gf}</h7>
+        <h6>{item.gf}</h6>
       </td>
       <td>
-        <h7>{item.gc}</h7>
+        <h6>{item.gc}</h6>
       </td>
     </tr>
   ));
