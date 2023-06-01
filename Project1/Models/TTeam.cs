@@ -6,7 +6,6 @@ namespace Project1.Models
     public class TTeam
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string name { get; set; }
         public string logo{ get; set; }
         public string iniciales { get; set; }

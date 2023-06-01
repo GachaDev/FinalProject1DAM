@@ -22,11 +22,10 @@ namespace Project1.Controllers
             _context = context;
         }
 
-        // GET: api/TJugadors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TJugador>>> GetTJugador()
         {
-            string query = "SELECT * FROM TJugador";
+            string query = "SELECT TJugador.*, TTeam.logo AS EquipoLogo FROM TJugador INNER JOIN TTeam ON TJugador.equipo = TTeam.name";
             var tJugador = await _context.TJugador.FromSqlRaw(query).ToListAsync();
 
             if (tJugador == null)
@@ -34,8 +33,23 @@ namespace Project1.Controllers
                 return NotFound();
             }
 
+            // Recorrer la lista de jugadores y asignar el valor del EquipoLogo
+            foreach (var jugador in tJugador)
+            {
+                // Obtener el equipo correspondiente al jugador
+                var equipo = await _context.TTeam.FindAsync(jugador.equipo);
+
+                // Asignar el valor del EquipoLogo si se encuentra el equipo
+                if (equipo != null)
+                {
+                    jugador.EquipoLogo = equipo.logo;
+                }
+            }
+
             return tJugador;
         }
+
+
 
         // GET: api/TJugadors/5
         [HttpGet("{id}")]

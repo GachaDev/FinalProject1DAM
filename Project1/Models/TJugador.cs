@@ -13,5 +13,8 @@ namespace Project1.Models
         public string imagen { get; set; }
         public string equipo { get; set; }
         public string tipo { get; set; }
+        // Nueva propiedad para el logo del equipo
+        [NotMapped] // Esta propiedad no se mapeará a la columna de la base de datos
+        public string EquipoLogo { get; set; }
     }
 }
