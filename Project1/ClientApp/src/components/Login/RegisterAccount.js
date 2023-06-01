@@ -6,17 +6,18 @@ export default function RegisterAccount({ setShowRegisterForm }) {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const createAccount = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+  
     const data = {
       mail: email,
       password: password,
       name: username,
     };
-
+  
     fetch('https://localhost:7233/api/usuarios/register', {
       method: 'POST',
       headers: {
@@ -24,18 +25,32 @@ export default function RegisterAccount({ setShowRegisterForm }) {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response)
-      .then((data) => {
-        console.log('Respuesta:', data);
+    .then((response) => {
+      if (!response.ok) {
+        setErrorMessage('Error al crear la cuenta');
+        throw new Error('Error al crear la cuenta');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('Respuesta:', data);
+      if (data.message === "Usuario creado con éxito") {
         setShowRegisterForm(false);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+      } else {
+        setErrorMessage(data.message);
+        throw new Error('Error al crear la cuenta');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      // Mostrar mensaje de error en el formulario
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+
+  };  
+  
 
   return (
     <div className='formulario'>
@@ -74,10 +89,15 @@ export default function RegisterAccount({ setShowRegisterForm }) {
                 <Loader size='md' color='orange' />
             ) : (
                 <Button color='dark' onClick={createAccount} fullWidth>
-                    Crear cuenta
+                  Crear cuenta
                 </Button>
             )}
         </div>
+        {errorMessage && (
+          <Text color='red' size='sm' align='center' mt={"md"}>
+            {errorMessage}
+          </Text>
+        )}
       </Paper>
     </div>
   );

@@ -54,12 +54,20 @@ namespace Project1.Controllers
                 return BadRequest("No se ha proporcionado ningún usuario.");
             }
 
-            string query = "INSERT INTO usuarios (mail, password, name) VALUES ({0}, {1}, {2})";
-            _context.Database.ExecuteSqlRaw(query, usuario.mail, usuario.password, usuario.name);
+            try
+            {
+                string insertQuery = "INSERT INTO usuarios (mail, password, name) VALUES ({0}, {1}, {2})";
+                _context.Database.ExecuteSqlRaw(insertQuery, usuario.mail, usuario.password, usuario.name);
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return Ok("Usuario creado con éxito");
+                return Ok(new { message = "Usuario creado con éxito" });
+            }
+            catch (DbUpdateException ex)
+            {
+                // Capturar la excepción de clave duplicada
+                return BadRequest(new { message = "Error al crear el usuario. Ya existe un usuario con el mismo correo electrónico." });
+            }
         }
 
     }
