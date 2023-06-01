@@ -13,6 +13,12 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 
+  imageContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   item: {
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
@@ -35,8 +41,8 @@ export default function FAQ() {
     <div className={classes.wrapper}>
       <Container size="lg">
         <Grid id="faq-grid" gutter={50}>
-          <Col span={12} md={6}>
-            <Image src={"https://ui.mantine.dev/_next/static/media/image.b0c2306b.svg"} alt="Frequently Asked Questions" />
+          <Col span={12} md={6} className={classes.imageContainer}>
+            <Image src={"https://esportsbureau.com/wp-content/uploads/2023/01/Kings-League-Infojobs-Jornada-1.jpg"} alt="Frequently Asked Questions" />
           </Col>
           <Col span={12} md={6}>
             <Title order={2} ta="left" className={classes.title}>
