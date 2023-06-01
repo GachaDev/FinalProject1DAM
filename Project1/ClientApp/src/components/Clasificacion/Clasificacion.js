@@ -1,5 +1,6 @@
 import { Table, ScrollArea } from '@mantine/core';
 
+//La variable 'data' contiene una matriz de objetos que representan información de clasificación de equipos de fútbol.
 const data = [
   {
     name: '1K',
@@ -123,6 +124,7 @@ const data = [
   }
 ]
 
+//El componente BarWithColor es una función que recibe como prop un texto y devuelve un componente que muestra un color de barra según el valor del texto.
 const BarWithColor = ({ text }) => {
   let barColor = '';
   
@@ -144,6 +146,7 @@ const BarWithColor = ({ text }) => {
   );
 };
 
+//El componente Clasificacion muestra una tabla con la información de clasificación de los equipos. Cada fila se genera a partir de los datos en la matriz data. El componente BarWithColor se utiliza para mostrar la posición del equipo con una barra de color.
 export default function Clasificacion() {
   const rows = data.map((item) => (
     <tr key={item.name}>
@@ -175,7 +178,8 @@ export default function Clasificacion() {
       </td>
     </tr>
   ));
-
+  
+  //Se utiliza el componente ScrollArea para agregar una barra de desplazamiento vertical a la tabla.
   return (
     <ScrollArea>
       <Table miw={800} verticalSpacing="sm">

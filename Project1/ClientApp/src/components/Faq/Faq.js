@@ -1,5 +1,6 @@
 import { createStyles, Image, Accordion, Grid, Col, Container, Title } from '@mantine/core';
 
+//La función createstyles es para definir estilos personalizados 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     paddingTop: `calc(${theme.spacing.xl} * 2)`,
@@ -19,6 +20,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+//La variable 'placeholder' contiene una matriz de cadenas que representan el texto de las preguntas y respuestas para las preguntas frecuentes.
 const placeholder =
   ['La Kings League es un torneo de fútbol 7 en la que participan un total de 12 equipos. Impulsada por Gerard Piqué e Ibai Llanos, surgió de una charla entre ambos con la idea de cambiar algunas reglas del deporte rey, como por ejemplo acortar el tiempo de duración de los partidos.',
     'El evento empieza a las 16h (con apertura de puertas a las 14:30h) y termina a las 23h. No obstante, los accesos estarán abiertos durante todo el evento.',
@@ -29,6 +31,8 @@ const placeholder =
               'Los encuentros tienen una duración de 40 minutos que se divide en dos partes de 20 minutos.',
                 'Es una liga de Fútbol-7, de 12 equipos y que tendrá dos splits de 11 jornadas cada uno. Después de la fase regular, arrancarán los play-off por el título entre los ocho primeros clasificados.']
 
+
+//El componente FAQ muestra una sección de preguntas frecuentes con imágenes y respuestas desplegables. Se utiliza el componente Accordion para crear la lista de preguntas y respuestas. Cada pregunta se representa mediante un elemento Accordion.Item, y la pregunta y la respuesta se colocan dentro de los componentes Accordion.Control y Accordion.Panel, respectivamente.
 export default function FAQ() {
   const { classes } = useStyles();
   return (

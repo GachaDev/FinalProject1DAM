@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NativeSelect } from '@mantine/core';
 
-const data = [
+//La variable 'data' contiene una matriz de objetos que representan información de jugadores de fútbol
+const data = [   
   {
     team: 'Ultimate Móstoles',
     shield: 'https://www.kingsleague.pro/wp-content/uploads/2022/11/ultimate-mostoles.svg',
@@ -100,6 +101,8 @@ const data = [
   }
 ];
 
+//El componente 'Paperr' recibe un objeto data como prop y muestra la información del jugador, incluyendo su imagen y detalles del equipo.
+//En el componente Paperr, hay varios elementos HTML con estilos en línea para dar formato
 function Paperr({ data}) {
   return (
     <div style={{ display:'flex'}}>
@@ -129,6 +132,7 @@ function Paperr({ data}) {
   );
 }
 
+//Componente principal para renderizar los demás componentes
 export default function Player1213() {
   const uniqueData = [...new Map(data.map((item) => [item.namePlayer, item])).values()];
   const [value, setValue] = useState('Todos');
