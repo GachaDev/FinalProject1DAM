@@ -99,7 +99,7 @@ namespace Project1.Controllers
         {
             if (_context.TPartido == null)
             {
-                return Problem("Entity set 'AppDbContext.TPartidoScoreGoals' is null.");
+                return Problem("Entity set 'AppDbContext.TPartido' is null.");
             }
 
             string insertQuery = "INSERT INTO TPartidoScoreGoals (Columna1, Columna2,Columna3) VALUES (@valor1, @valor2,@valor3)";

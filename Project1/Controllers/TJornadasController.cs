@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project1.Context;
 using Project1.Models;
@@ -25,22 +26,23 @@ namespace Project1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TJornada>>> GetTJornada()
         {
-          if (_context.TJornada == null)
-          {
-              return NotFound();
-          }
-            return await _context.TJornada.ToListAsync();
+            string query = "SELECT * FROM TJornada";
+            var tJornada = await _context.TJornada.FromSqlRaw(query).ToListAsync();
+
+            if (tJornada == null)
+            {
+                return NotFound();
+            }
+
+            return tJornada;
         }
 
         // GET: api/TJornadas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TJornada>> GetTJornada(int id)
         {
-          if (_context.TJornada == null)
-          {
-              return NotFound();
-          }
-            var tJornada = await _context.TJornada.FindAsync(id);
+            string query = "SELECT * FROM TJornada WHERE Id = @id";
+            var tJornada = await _context.TJornada.FromSqlRaw(query, new SqlParameter("@id", id)).FirstOrDefaultAsync();
 
             if (tJornada == null)
             {
@@ -60,7 +62,15 @@ namespace Project1.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(tJornada).State = EntityState.Modified;
+            string query = "UPDATE TJugador SET Columna1 = @valor1, Columna2 = @valor2 WHERE Id = @id";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@valor1", tJornada.id),
+                new SqlParameter("@valor2", tJornada.fecha),
+                new SqlParameter("@id", id)
+            };
+
+            _context.Database.ExecuteSqlRaw(query, parameters);
 
             try
             {
@@ -86,15 +96,25 @@ namespace Project1.Controllers
         [HttpPost]
         public async Task<ActionResult<TJornada>> PostTJornada(TJornada tJornada)
         {
-          if (_context.TJornada == null)
-          {
-              return Problem("Entity set 'AppDbContext.TJornada'  is null.");
-          }
-            _context.TJornada.Add(tJornada);
+            if (_context.TJornada == null)
+            {
+                return Problem("Entity set 'AppDbContext.TJornada' is null.");
+            }
+
+            string insertQuery = "INSERT INTO TJornada (Columna1, Columna2) VALUES (@valor1, @valor2)";
+            SqlParameter[] insertParameters = new SqlParameter[]
+            {
+                new SqlParameter("@valor1", tJornada.id),
+                new SqlParameter("@valor2", tJornada.fecha)
+
+            };
+
+            _context.Database.ExecuteSqlRaw(insertQuery, insertParameters);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTJornada", new { id = tJornada.id }, tJornada);
+            return CreatedAtAction("GetTJugador", new { id =tJornada.id }, tJornada);
         }
+
 
         // DELETE: api/TJornadas/5
         [HttpDelete("{id}")]
@@ -104,7 +124,11 @@ namespace Project1.Controllers
             {
                 return NotFound();
             }
-            var tJornada = await _context.TJornada.FindAsync(id);
+
+            string deleteQuery = "DELETE FROM TJornada WHERE Id = @id";
+            SqlParameter deleteParameter = new SqlParameter("@id", id);
+
+            var tJornada = await _context.TJornada.FromSqlRaw(deleteQuery, deleteParameter).FirstOrDefaultAsync();
             if (tJornada == null)
             {
                 return NotFound();
@@ -118,7 +142,7 @@ namespace Project1.Controllers
 
         private bool TJornadaExists(int id)
         {
-            return (_context.TJornada?.Any(e => e.id == id)).GetValueOrDefault();
+            return _context.TJornada?.Any(e => e.id == id) ?? false;
         }
     }
 }
