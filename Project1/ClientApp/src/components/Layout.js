@@ -5,7 +5,7 @@ export default function Layout(props) {
     { link: '/', label: 'Home' },
     { link: '/FAQ', label: 'Preguntas' },
     { link: '/clasificacion', label: 'Clasificación'},
-    { link: '/Player12&13', label: 'Jugador 12 y 13' },
+    { link: '/Player12&13', label: 'Jugadores' },
     { link: '/Contacto', label: 'Contacto'}
   ];
 

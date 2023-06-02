@@ -108,7 +108,7 @@ export default function Player1213() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', margin: '5%', gap: '20px' }}>
-      <h1 style={{fontFamily: "Archivo Narrow"}}>Jugadores 12 y 13</h1>
+      <h1 style={{fontFamily: "Archivo Narrow"}}>Jugadores</h1>
       <div style={{display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center'}}>
         <NativeSelect
           maw={'25%'}
