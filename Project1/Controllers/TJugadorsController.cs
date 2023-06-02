@@ -59,16 +59,19 @@ namespace Project1.Controllers
 
             try
             {
-                _context.TJugador.Add(jugador);
+                string insertQuery = "INSERT INTO TJugador (nombre, posicion, imagen, equipo, tipo) VALUES ({0}, {1}, {2}, {3}, {4})";
+                _context.Database.ExecuteSqlRaw(insertQuery, jugador.nombre, jugador.posicion, jugador.imagen, jugador.equipo, jugador.tipo);
+
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Jugador creado con éxito" });
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                return BadRequest(new { message = "Error al crear el jugador." });
+                return BadRequest(new { message = "Error al crear el jugador." });            
             }
         }
+
 
     }
 }

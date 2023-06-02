@@ -15,7 +15,7 @@ export default function Player1213() {
   const [name, setName] = useState('');
   const [imagen, setImagen] = useState('');
   const [selectedTeam, setSelectedTeam] = useState('');
-  const [tipo, setTipo] = useState('');
+  const [tipo, setTipo] = useState('13');
   const { Admin } = UseAdmin();
 
   //Utilizamos useEffect para coger los datos de la base de datos
