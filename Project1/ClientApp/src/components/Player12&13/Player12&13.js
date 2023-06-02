@@ -113,7 +113,7 @@ export default function Player1213() {
           maw={'25%'}
           value={value}
           onChange={(event) => setValue(event.currentTarget.value)}
-          data={['Todos','Jugador 12', 'Jugador 13']}
+          data={['Todos', 'Draft', 'Jugador 11', 'Jugador 12', 'Jugador 13']}
         />
         {Admin ? <Button onClick={open} color="orange" radius="md" size="xs" uppercase>
           Insertar jugador
@@ -121,7 +121,7 @@ export default function Player1213() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns:'repeat(3,1fr)',gap:'20px' }}>
         {data.map((player, index) => (
-          (value === 'Todos' || value === 'Jugador ' + player.tipo) ? (
+          (value === 'Todos' || value === 'Jugador ' + player.tipo || value === player.tipo) ? (
             <Paperr key={index} data={player} />
           ) : null
         ))}
