@@ -72,6 +72,28 @@ namespace Project1.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var jugador = await _context.TJugador.FindAsync(id);
+
+            if (jugador == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.TJugador.Remove(jugador);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Jugador eliminado con éxito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error al eliminar el jugador." });
+            }
+        }
 
     }
 }
