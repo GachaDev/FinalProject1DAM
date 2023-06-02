@@ -50,6 +50,7 @@ export default function Player1213() {
   const [tipo, setTipo] = useState('');
   const { Admin } = UseAdmin();
 
+  //Utilizamos useEffect para coger los datos de la base de datos
   useEffect(() => {
     fetch('https://localhost:7233/api/TJugadors')
       .then(response => response.json())
