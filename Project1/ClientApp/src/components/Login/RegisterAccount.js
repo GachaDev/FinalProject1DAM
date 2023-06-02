@@ -86,11 +86,11 @@ export default function RegisterAccount({ setShowRegisterForm }) {
         </Text>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
             {loading ? (
-                <Loader size='md' color='orange' />
+              <Loader size='md' color='orange' />
             ) : (
-                <Button color='dark' onClick={createAccount} fullWidth>
-                  Crear cuenta
-                </Button>
+              <Button color='dark' onClick={createAccount} fullWidth>
+                Crear cuenta
+              </Button>
             )}
         </div>
         {errorMessage && (

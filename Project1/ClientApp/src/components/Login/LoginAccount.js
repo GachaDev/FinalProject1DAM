@@ -5,9 +5,10 @@ import {
     Text,
     Button,
     Anchor,
+    Loader
 } from '@mantine/core';
 
-export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmail, setPassword, errorMessage, setIsLogged}) {  
+export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmail, setPassword, errorMessage, setIsLogged, loading}) {  
     return (
         <div className='formulario'>
             <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
@@ -30,9 +31,15 @@ export default function LoginAccount({setShowRegisterForm, handleSubmit, setEmai
                     Crear cuenta
                     </Anchor>
                 </Text>
-                <Button onClick={handleSubmit} color='dark' fullWidth mt='xl'>
-                    Iniciar sesión
-                </Button>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    {loading ? (
+                        <Loader size='md' color='orange' />
+                    ) : (
+                        <Button onClick={handleSubmit} color='dark' fullWidth mt='xl'>
+                            Iniciar sesión
+                        </Button>
+                    )}
+                </div>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Anchor
                         onClick={() => { setIsLogged(true) }}

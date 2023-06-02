@@ -16,12 +16,16 @@ export default function Login({ setIsLogged }) {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const { setAdmin } = UseAdmin();
+    const [loading, setLoading] = useState(false);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
         const response = await fetch(`https://localhost:7233/api/usuarios/${email}/${password}`);
         const data = await response.json();
         if (data.length === 0 || password === "" || email === "") {
+            setLoading(false);
             if (password === "" || email === "") {
                 setErrorMessage('Introduce el correo y la contraseña para poder iniciar sesión');
             } else {
@@ -29,6 +33,7 @@ export default function Login({ setIsLogged }) {
             }
         } else {
             setAdmin(true);
+            setLoading(false);
             setIsLogged(true);
         }
     };
@@ -63,7 +68,7 @@ export default function Login({ setIsLogged }) {
                     Kings League
                 </Title>
                 {showLoginForm && !showRegisterForm && (
-                    <LoginAccount setShowRegisterForm={setShowRegisterForm} handleSubmit={handleSubmit} setEmail={setEmail} setPassword={setPassword} errorMessage={errorMessage} setIsLogged={setIsLogged} />
+                    <LoginAccount setShowRegisterForm={setShowRegisterForm} handleSubmit={handleSubmit} setEmail={setEmail} setPassword={setPassword} errorMessage={errorMessage} setIsLogged={setIsLogged} loading={loading} />
                 )}
                 {showRegisterForm  && (
                     <RegisterAccount setShowRegisterForm={setShowRegisterForm}/>
