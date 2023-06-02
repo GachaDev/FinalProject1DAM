@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Header, Group, Container, Image, ActionIcon } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram, IconBrandTwitch, IconBrandTiktok } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { Logout } from 'tabler-icons-react';
 import SocialIcon from './SocialIcon';
 import { UseAdmin } from '../../Zustand/UseAdmin';
@@ -9,6 +9,12 @@ import { UseAdmin } from '../../Zustand/UseAdmin';
 export default function NavMenu({ links }) {
   const [active, setActive] = useState(links[0].link);
   const { setIsLogged, setAdmin } = UseAdmin();
+  const navigate = useNavigate();
+
+  const Logoutx = function() {
+    setIsLogged(false); 
+    setAdmin(false);
+  }
 
   const items = links.map((link) => (
     <Link
@@ -45,7 +51,7 @@ export default function NavMenu({ links }) {
             <SocialIcon href="https://instagram.com/KingsLeague" target="_blank" rel="noopener" color="#ee3d6c" size="1.1rem" stroke={1.5} icon={IconBrandInstagram} />
             <SocialIcon href="https://twitch.tv/KingsLeague" target="_blank" rel="noopener" color="#a970ff" size="1.1rem" stroke={1.5} icon={IconBrandTwitch} />
             <SocialIcon href="https://tiktok.com/@KingsLeague" target="_blank" rel="noopener" color="rgb(254 44 85)" size="1.1rem" stroke={1.5} icon={IconBrandTiktok} />
-            <ActionIcon variant="transparent" size="lg" className={'socialIcon'}><Logout size="1.1rem" strokeWidth={1.5} color={'white'} onClick={()=> {setIsLogged(false); setAdmin(false)}}/></ActionIcon>
+            <ActionIcon variant="transparent" size="lg" className={'socialIcon'}><Logout size="1.1rem" strokeWidth={1.5} color={'white'} onClick={()=> {navigate('/');Logoutx()}}/></ActionIcon>
           </Group>
         </div>
       </Container>
