@@ -95,5 +95,40 @@ namespace Project1.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TJugador>> Update(int id, [FromBody] TJugador jugador)
+        {
+            if (id != jugador.id)
+            {
+                return BadRequest("El ID del jugador no coincide con el ID proporcionado.");
+            }
+
+            try
+            {
+                var existingJugador = await _context.TJugador.FindAsync(id);
+
+                if (existingJugador == null)
+                {
+                    return NotFound();
+                }
+
+                existingJugador.nombre = jugador.nombre;
+                existingJugador.posicion = jugador.posicion;
+                existingJugador.imagen = jugador.imagen;
+                existingJugador.equipo = jugador.equipo;
+                existingJugador.tipo = jugador.tipo;
+
+                _context.TJugador.Update(existingJugador);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Jugador actualizado con éxito" });
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(new { message = "Error al actualizar el jugador." });
+            }
+        }
+
+
     }
 }

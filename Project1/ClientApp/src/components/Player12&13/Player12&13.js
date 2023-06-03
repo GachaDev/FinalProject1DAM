@@ -18,24 +18,46 @@ export default function Player1213() {
   const [tipo, setTipo] = useState('13');
   const { Admin } = UseAdmin();
 
-  //Utilizamos useEffect para coger los datos de la base de datos
-  useEffect(() => {
+  const fetchPlayerData = () => {
     fetch('https://localhost:7233/api/TJugadors')
       .then(response => response.json())
       .then(newData => {
         setData(newData);
       })
-      .catch(error => console.error('Error al obtener los datos de la API:', error));
-    fetch('https://localhost:7233/api/TTeams')
-      .then(response => response.json())
-      .then(data => {
-        setTeams(data);
-        setSelectedTeam(data[0].name); // Establecer el primer equipo como valor inicial
-      })
-      .catch(error => console.error('Error al obtener los datos de la API:', error));
-  }, []);  
+    .catch(error => console.error('Error al obtener los datos de la API:', error));
+  };
 
-  const handleInsertPlayer = async (event) => {
+  const handleDeletePlayer = async (id) => {
+    try {
+      const response = await fetch(`https://localhost:7233/api/TJugadors/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData.message); // Mensaje de éxito de eliminación del jugador
+        fetchPlayerData(); // Actualizar la lista de jugadores después de eliminar uno
+      } else {
+        console.log('Error al eliminar el jugador');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Utilizamos useEffect para coger los datos de la base de datos
+  useEffect(() => {
+    fetch('https://localhost:7233/api/TTeams')
+    .then(response => response.json())
+    .then(data => {
+      setTeams(data);
+      setSelectedTeam(data[0].name); // Establecer el primer equipo como valor inicial
+    })
+    .catch(error => console.error('Error al obtener los datos de la API:', error));
+    fetchPlayerData();
+  }, []);
+
+  const handleInsertPlayer = async () => {
     const newPlayer = {
       nombre: name,
       posicion: pos,
@@ -60,22 +82,16 @@ export default function Player1213() {
     })
     .then((data) => {
       console.log('Respuesta:', data);
-      fetch('https://localhost:7233/api/TJugadors')
-      .then(response => response.json())
-      .then(newData => {
-        setData(newData);
-      })
-      .catch(error => console.error('Error al obtener los datos de la API:', error));
+      fetchPlayerData();
     })
     .catch((error) => {
       console.error('Error:', error);
-      // Mostrar mensaje de error en el formulario
     });
     close()
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', margin: '5%', gap: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', margin: '2%', gap: '20px' }}>
       <h1 style={{fontFamily: "Archivo Narrow"}}>Jugadores</h1>
       <div style={{display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center'}}>
         <NativeSelect
@@ -88,10 +104,10 @@ export default function Player1213() {
           Insertar jugador
         </Button> : null}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns:'repeat(3,1fr)',gap:'20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'20px' }}>
         {data.map((player, index) => (
           (value === 'Todos' || value === 'Jugador ' + player.tipo || value === player.tipo) ? (
-            <Paperr key={index} data={player} />
+            <Paperr key={index} data={player} handleDeletePlayer={handleDeletePlayer} teams={teams} fetchPlayerData={fetchPlayerData} />
           ) : null
         ))}
       </div>

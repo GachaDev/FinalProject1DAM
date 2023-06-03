@@ -2,7 +2,7 @@ import NavMenu from './NavMenu/NavMenu';
 
 export default function Layout(props) {
   const links = [
-    { link: '/', label: 'Home' },
+    { link: '/', label: 'Inicio' },
     { link: '/FAQ', label: 'Preguntas' },
     { link: '/clasificacion', label: 'Clasificación'},
     { link: '/Player12&13', label: 'Jugadores' },
