@@ -84,8 +84,8 @@ namespace Project1.Controllers
 
             try
             {
-                _context.TJugador.Remove(jugador);
-                await _context.SaveChangesAsync();
+                string deleteQuery = "DELETE FROM TJugador WHERE id = {0}";
+                _context.Database.ExecuteSqlRaw(deleteQuery, id);
 
                 return Ok(new { message = "Jugador eliminado con éxito" });
             }
@@ -105,21 +105,8 @@ namespace Project1.Controllers
 
             try
             {
-                var existingJugador = await _context.TJugador.FindAsync(id);
-
-                if (existingJugador == null)
-                {
-                    return NotFound();
-                }
-
-                existingJugador.nombre = jugador.nombre;
-                existingJugador.posicion = jugador.posicion;
-                existingJugador.imagen = jugador.imagen;
-                existingJugador.equipo = jugador.equipo;
-                existingJugador.tipo = jugador.tipo;
-
-                _context.TJugador.Update(existingJugador);
-                await _context.SaveChangesAsync();
+                string updateQuery = "UPDATE TJugador SET nombre = {0}, posicion = {1}, imagen = {2}, equipo = {3}, tipo = {4} WHERE id = {5}";
+                _context.Database.ExecuteSqlRaw(updateQuery, jugador.nombre, jugador.posicion, jugador.imagen, jugador.equipo, jugador.tipo, id);
 
                 return Ok(new { message = "Jugador actualizado con éxito" });
             }
