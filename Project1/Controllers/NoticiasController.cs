@@ -62,11 +62,13 @@ namespace Project1.Controllers
                 return BadRequest();
             }
 
-            string query = "UPDATE Noticias SET Columna1 = @valor1, Columna2 = @valor2 WHERE Id = @id";
+            string query = "UPDATE Noticias SET Columna1 = @valor1, Columna2 = @valor2,Columna3 = @valor3,Columna4 = @valor4 WHERE Id = @id";
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@valor1", Noticias.id),
                 new SqlParameter("@valor2", Noticias.fecha),
+                new SqlParameter("@valor3", Noticias.imagen),
+                new SqlParameter("@valor4", Noticias.frase),
                 new SqlParameter("@id", id)
             };
 
@@ -98,14 +100,16 @@ namespace Project1.Controllers
         {
             if (_context.Noticias == null)
             {
-                return Problem("Entity set 'AppDbContext.TJornada' is null.");
+                return Problem("Entity set 'AppDbContext.Noticias' is null.");
             }
 
-            string insertQuery = "INSERT INTO Noticias (Columna1, Columna2) VALUES (@valor1, @valor2)";
+            string insertQuery = "INSERT INTO Noticias (Columna1, Columna2,Columna3,Columna4) VALUES (@valor1, @valor2,@valor3,@valor4)";
             SqlParameter[] insertParameters = new SqlParameter[]
             {
                 new SqlParameter("@valor1", Noticias.id),
-                new SqlParameter("@valor2", Noticias.fecha)
+                new SqlParameter("@valor2", Noticias.fecha),
+                new SqlParameter("@valor3", Noticias.imagen),
+                new SqlParameter("@valor4", Noticias.frase)
 
             };
 

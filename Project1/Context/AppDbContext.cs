@@ -17,5 +17,6 @@ namespace Project1.Context
         public DbSet<Project1.Models.TPartidoScoreGoals>? TPartidoScoreGoals { get; set; }
         public DbSet<Project1.Models.TJornada>? TJornada { get; set; }
         public DbSet<Project1.Models.Noticias>? Noticias { get; set; }
+        public DbSet<Project1.Models.TCartel>? TCartel { get; set; }
     }
 }
