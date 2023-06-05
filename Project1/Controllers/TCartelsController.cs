@@ -26,13 +26,30 @@ namespace Project1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TCartel>>> GetTCartel()
         {
-            string query = "SELECT * FROM TCartel";
+            string query = "select TCartel.*, TJugador.imagen,TJugador.nombre, TJugador.equipo, TTeam.background from TCartel INNER JOIN TJugador ON TJugador.id = TCartel.id INNER JOIN TTeam ON TTeam.name = TJugador.equipo";
             var tCartel = await _context.TCartel.FromSqlRaw(query).ToListAsync();
 
             if (tCartel == null)
             {
                 return NotFound();
             }
+            foreach (var cartel in tCartel)
+            {
+                var jugador = await _context.TJugador.FindAsync(cartel.id);
+                if(jugador != null)
+                {
+                    cartel.imagen = jugador.imagen;
+                    cartel.equipo=jugador.equipo;
+                    cartel.nombre = jugador.nombre;
+                }
+                var equipo= await _context.TTeam.FindAsync(cartel.equipo);
+                if(equipo != null)
+                {
+                    cartel.background=equipo.background;
+                }
+                
+            }
+
 
             return tCartel;
         }

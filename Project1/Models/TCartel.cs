@@ -11,5 +11,13 @@ namespace Project1.Models
         public int idCartel { get; set; }
         public string texto1 { get; set; }
         public string texto2 { get; set; }
+        [NotMapped]
+        public string imagen { get; set;}
+        [NotMapped]
+        public string equipo { get; set;}
+        [NotMapped] 
+        public string background { get; set;}
+        [NotMapped] 
+        public string nombre { get; set;}    
     }
 }

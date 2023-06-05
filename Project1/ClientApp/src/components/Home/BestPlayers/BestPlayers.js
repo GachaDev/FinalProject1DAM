@@ -1,11 +1,27 @@
 import CardPlayer from './CardPlayer';
+import { useState,useEffect } from 'react';
 
 export default function BestPlayers() {
+  const [data, setData] = useState([])
+  const fetchCards = () => {
+    fetch('https://localhost:7233/api/TCartels')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setData(data);
+    })
+    .catch(error => console.error('Error al obtener los datos de la API:', error));
+  };
+
+  useEffect(()=>{
+    fetchCards();
+  },[])
+
   return (
     <div style={{display: 'flex', flexDirection: 'row', gap: 20}}>
-      <CardPlayer backUrl={'https://kingsleague.pro/wp-content/uploads/2022/12/troncos-bg.jpg'} title={'MVP'} category={'Jornada 2'} name={'Verdú'} playerImg={'https://kingsleague.pro/wp-content/uploads/2023/05/TFC_10.png'} />
-      <CardPlayer backUrl={'https://kingsleague.pro/wp-content/uploads/2022/12/1k-bg.jpg'} title={'5'} category={'Goles'} name={'Granero'} playerImg={'https://kingsleague.pro/wp-content/uploads/2023/05/1K_7.png'} />
-      <CardPlayer backUrl={'https://kingsleague.pro/wp-content/uploads/2022/12/1k-bg.jpg'} title={'3'} category={'Asistencias'} name={'Ricardo'} playerImg={'https://kingsleague.pro/wp-content/uploads/2023/05/1K_01.png'} />
+      {data.map((v)=>(
+        <CardPlayer backUrl={v.background} title={v.texto2} category={v.texto1} name={v.nombre} playerImg={v.imagen} />
+      ))}
     </div>
   );
 }
