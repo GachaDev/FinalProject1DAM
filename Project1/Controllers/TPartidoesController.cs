@@ -67,7 +67,7 @@ namespace Project1.Controllers
             {
                 new SqlParameter("@valor1", tPartido.id),
                 new SqlParameter("@valor2", tPartido.jornada),
-                new SqlParameter("@valor3", tPartido.hora),
+                new SqlParameter("@valor3", tPartido.hour),
                 new SqlParameter("@id", id)
             };
 
@@ -107,7 +107,7 @@ namespace Project1.Controllers
             {
                 new SqlParameter("@valor1", tPartido.id),
                 new SqlParameter("@valor2", tPartido.jornada),
-                new SqlParameter("@valor3", tPartido.hora),
+                new SqlParameter("@valor3", tPartido.hour),
             };
 
             _context.Database.ExecuteSqlRaw(insertQuery, insertParameters);
