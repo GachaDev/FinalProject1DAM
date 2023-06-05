@@ -7,6 +7,7 @@ import ModalInsertNoticia from './ModalInsertNoticia';
 import { useDisclosure } from '@mantine/hooks';
 import { Trash, Edit } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
+import ModalEditNoticia from './ModalEditNoticia';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -35,12 +36,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Card({ id, imagen, frase, fecha, fetchData }) {
+function Card({ id, imagen, frase, fecha, fetchData, openModal, setFrase, setImagen, setFecha, setId }) {
   const { classes } = useStyles();
   const { Admin } = UseAdmin();
-
   const handleDeleteNotice = async (id) => {
-    console.log(id)
     try {
       const response = await fetch(`https://localhost:7233/api/Noticias/${id}`, {
         method: 'DELETE'
@@ -75,7 +74,7 @@ function Card({ id, imagen, frase, fecha, fetchData }) {
           <ActionIcon variant="transparent" size="lg" className={'socialIcon'}>
             <Edit
               size={20}
-              // onClick={open}
+              onClick={()=> {setId(id);setFrase(frase);setImagen(imagen);setFecha(fecha);openModal();}}
               strokeWidth={2}
               color={'white'}
             />
@@ -106,7 +105,9 @@ export default function CarouselE() {
   const [frase, setFrase] = useState('')
   const [imagen, setImagen] = useState('')
   const [fecha, setFecha] = useState('')
+  const [id, setId] = useState('')
   const [opened, { open, close }] = useDisclosure(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     function handleResize() {
@@ -132,6 +133,40 @@ export default function CarouselE() {
     })
     .catch(error => console.error('Error al obtener los datos de la API:', error));
   };
+
+  const editNotice = async () => {
+    try {
+      const updatedNotice = {
+        id: id,
+        fecha: fecha,
+        imagen: imagen,
+        frase: frase
+      };
+  
+      const response = await fetch(`https://localhost:7233/api/Noticias/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedNotice)
+      });
+  
+      if (response.ok) {
+        console.log('Noticia editada con éxito');
+        fetchNotices(); // Vuelve a cargar los datos actualizados
+      } else {
+        console.log('Error al editar la noticia');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  
+    setId('');
+    setImagen('');
+    setFecha('');
+    setFrase('');
+    setIsModalOpen(false);
+  };  
 
   useEffect(() => {
     fetchNotices()
@@ -169,7 +204,7 @@ export default function CarouselE() {
 
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
-      <Card {...item} fetchData={fetchNotices} />
+      <Card {...item} fetchData={fetchNotices} openModal={() => setIsModalOpen(true)} setFrase={setFrase} setImagen={setImagen} setFecha={setFecha} setId={setId} />
     </Carousel.Slide>
   ));
 
@@ -184,7 +219,7 @@ export default function CarouselE() {
             Añadir jornada
           </Button>
         </div>
-      : null}
+      : <div style={{marginTop:'2rem'}}> </div>}
       <Carousel
         mx="auto"
         withIndicators
@@ -198,6 +233,7 @@ export default function CarouselE() {
         {slides}
       </Carousel>
       <ModalInsertNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} opened={opened} close={close} handleInsertNotice={handleInsertNotice} />
+      <ModalEditNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} openedModal={isModalOpen} closeModal={() => setIsModalOpen(false)} editNotice={editNotice} />
     </div>
   );
 }

@@ -37,21 +37,6 @@ namespace Project1.Controllers
             return tNoticias;
         }
 
-        // GET: api/Noticias/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Noticias>> GetNoticias(int id)
-        {
-            string query = "SELECT * FROM Noticias WHERE Id = @id";
-            var tNoticias = await _context.Noticias.FromSqlRaw(query, new SqlParameter("@id", id)).FirstOrDefaultAsync();
-
-            if (tNoticias == null)
-            {
-                return NotFound();
-            }
-
-            return tNoticias;
-        }
-
         // PUT: api/Noticias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -62,17 +47,9 @@ namespace Project1.Controllers
                 return BadRequest();
             }
 
-            string query = "UPDATE Noticias SET Columna1 = @valor1, Columna2 = @valor2,Columna3 = @valor3,Columna4 = @valor4 WHERE Id = @id";
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@valor1", Noticias.id),
-                new SqlParameter("@valor2", Noticias.fecha),
-                new SqlParameter("@valor3", Noticias.imagen),
-                new SqlParameter("@valor4", Noticias.frase),
-                new SqlParameter("@id", id)
-            };
+            string query = "UPDATE Noticias SET fecha = {0}, imagen = {1}, frase ={2} WHERE id = {3}";
 
-            _context.Database.ExecuteSqlRaw(query, parameters);
+            _context.Database.ExecuteSqlRaw(query, Noticias.fecha, Noticias.imagen, Noticias.frase, Noticias.id);
 
             try
             {
@@ -92,7 +69,6 @@ namespace Project1.Controllers
 
             return NoContent();
         }
-
         // POST: api/Noticias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
