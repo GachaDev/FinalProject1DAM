@@ -95,6 +95,7 @@ function Card({ id, imagen, frase, fecha, fetchData }) {
 }
 
 
+
 export default function CarouselE() {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
