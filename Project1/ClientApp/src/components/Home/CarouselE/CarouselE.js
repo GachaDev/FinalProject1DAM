@@ -115,6 +115,7 @@ const data = [
 ];
 
 
+
 export default function CarouselE() {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);

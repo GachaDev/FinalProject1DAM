@@ -24,7 +24,7 @@ namespace Project1.Controllers
 
         // GET: api/Noticias
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Noticias>>> GetTJornada()
+        public async Task<ActionResult<IEnumerable<Noticias>>> GetNoticias()
         {
             string query = "SELECT * FROM Noticias";
             var tNoticias = await _context.Noticias.FromSqlRaw(query).ToListAsync();
