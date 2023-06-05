@@ -1,4 +1,6 @@
 import { Table, ScrollArea } from '@mantine/core';
+import { UseAdmin } from '../../Zustand/UseAdmin';
+import { Button } from '@mantine/core';
 
 //La variable 'data' contiene una matriz de objetos que representan información de clasificación de equipos de fútbol.
 const data = [
@@ -179,6 +181,8 @@ export default function Clasificacion() {
     </tr>
   ));
   
+  const { Admin } = UseAdmin();
+
   //Se utiliza el componente ScrollArea para agregar una barra de desplazamiento vertical a la tabla.
   return (
     <ScrollArea>
@@ -197,6 +201,9 @@ export default function Clasificacion() {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
+      {Admin ? <Button style={{marginRight: '1%', marginLeft: 'auto', display: 'block'}} color="orange" radius="md" size="xs" uppercase>
+        Insertar Equipo
+      </Button> : null}
     </ScrollArea>
   );
 }
