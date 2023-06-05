@@ -4,7 +4,8 @@ import { UseAdmin } from '../../../Zustand/UseAdmin';
 
 export default function BestPlayers() {
   const { Cartel, setCartel } = UseAdmin();
-  const fetchCards = () => {
+
+  useEffect(() => {
     fetch('https://localhost:7233/api/TCartels')
     .then(response => response.json())
     .then(data => {
@@ -12,11 +13,7 @@ export default function BestPlayers() {
       setCartel(data);
     })
     .catch(error => console.error('Error al obtener los datos de la API:', error));
-  };
-
-  useEffect(()=>{
-    fetchCards();
-  })
+  }, [Cartel, setCartel]);
 
   return (
     <div style={{display: 'flex', flexDirection: 'row', gap: 20}}>
