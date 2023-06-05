@@ -8,6 +8,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Trash, Edit } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
 import ModalEditNoticia from './ModalEditNoticia';
+import ModalInsertCartel from './ModalInsertCartel';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -100,14 +101,19 @@ export default function CarouselE() {
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [forceUpdate, setForceUpdate] = useState(false);
   const [firstTime, setFirstTime] = useState(false);
-  const { Admin } = UseAdmin();
+  const { Admin, setCartel } = UseAdmin();
   const [data, setData] = useState([])
   const [frase, setFrase] = useState('')
   const [imagen, setImagen] = useState('')
   const [fecha, setFecha] = useState('')
   const [id, setId] = useState('')
+  const [idJugador, setIdJugador] = useState('')
+  const [texto1, setTexto1] = useState('')
+  const [texto2, setTexto2] = useState('')
   const [opened, { open, close }] = useDisclosure(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCartelModalOpen, setIsCartelModalOpen] = useState(false);
+
 
   useEffect(() => {
     function handleResize() {
@@ -174,9 +180,9 @@ export default function CarouselE() {
 
   const handleInsertNotice = async () => {
     const newNotice = {
-      frase: frase,
-      imagen: imagen,
-      fecha: fecha
+      id: idJugador,
+      texto1: texto1,
+      texto2: texto2
     };
   
     try {
@@ -200,7 +206,47 @@ export default function CarouselE() {
     }
   
     close();
-  };  
+  };
+
+  const handleInsertCartel = async () => {
+    console.log('ee')
+    const newC = {
+      id: idJugador,
+      texto1: texto1,
+      texto2: texto2,
+      imagen: '',
+      equipo: '',
+      background: '',
+      nombre: ''
+    };
+    
+    console.log(newC)
+    try {
+      const response = await fetch('https://localhost:7233/api/TCartels', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newC)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al crear la noticia');
+      }
+      fetch('https://localhost:7233/api/TCartels')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setCartel(data);
+      })
+    .catch(error => console.error('Error al obtener los datos de la API:', error));
+      const data = await response.json();
+      console.log('Respuesta:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setIsCartelModalOpen(false);
+  }; 
 
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
@@ -218,6 +264,9 @@ export default function CarouselE() {
           <Button style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
             Añadir jornada
           </Button>
+          <Button onClick={()=>{setIsCartelModalOpen(true)}} style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
+            Añadir cartel
+          </Button>
         </div>
       : <div style={{marginTop:'2rem'}}> </div>}
       <Carousel
@@ -234,6 +283,7 @@ export default function CarouselE() {
       </Carousel>
       <ModalInsertNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} opened={opened} close={close} handleInsertNotice={handleInsertNotice} />
       <ModalEditNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} openedModal={isModalOpen} closeModal={() => setIsModalOpen(false)} editNotice={editNotice} />
+      <ModalInsertCartel id={idJugador} setId={setIdJugador} texto1={texto1} setTexto1={setTexto1} texto2={texto2} setTexto2={setTexto2} opened={isCartelModalOpen} close={() => setIsCartelModalOpen(false)} handleInsertCartel={handleInsertCartel} />
     </div>
   );
 }

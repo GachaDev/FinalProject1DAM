@@ -111,28 +111,21 @@ namespace Project1.Controllers
         }
 
         // POST: api/TCartels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPost]
-        public async Task<ActionResult<TCartel>> PostTCartel(TCartel tCartel)
+        public async Task<ActionResult<TCartel>> PostTCartel([FromBody] TCartel TCartel)
         {
-            if (_context.TCartel == null)
+            if (TCartel == null)
             {
                 return Problem("Entity set 'AppDbContext.TCartel' is null.");
             }
 
-            string insertQuery = "INSERT INTO Noticias (Columna1, Columna2,Columna3,Columna4) VALUES (@valor1, @valor2,@valor3,@valor4)";
-            SqlParameter[] insertParameters = new SqlParameter[]
-            {
-                new SqlParameter("@valor1", tCartel.id),
-                new SqlParameter("@valor2", tCartel.idCartel),
-                new SqlParameter("@valor3", tCartel.texto1),
-                new SqlParameter("@valor4", tCartel.texto2)
-            };
+            string insertQuery = "INSERT INTO TCartel (id,texto1,texto2) VALUES ({0}, {1}, {2})";
 
-            _context.Database.ExecuteSqlRaw(insertQuery, insertParameters);
+            _context.Database.ExecuteSqlRaw(insertQuery, TCartel.id, TCartel.texto1, TCartel.texto2);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTCartel", new { id = tCartel.id }, tCartel);
+            return Ok(new { message = "Cartel creado con éxito" });
         }
 
         // DELETE: api/TCartels/5
