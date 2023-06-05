@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import { createStyles, Paper, Text, Title, useMantineTheme, rem } from '@mantine/core';
+import { createStyles, Paper, Text, Title, useMantineTheme, rem, Button } from '@mantine/core';
+import {UseAdmin} from '../../../Zustand/UseAdmin'
+import ModalInsertNoticia from './ModalInsertNoticia';
+import { useDisclosure } from '@mantine/hooks';
+import { Trash, Edit } from 'tabler-icons-react';
+import { ActionIcon } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -30,89 +35,64 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Card({ image, title, date }) {
+function Card({ id, imagen, frase, fecha, fetchData }) {
   const { classes } = useStyles();
+  const { Admin } = UseAdmin();
+
+  const handleDeleteNotice = async (id) => {
+    console.log(id)
+    try {
+      const response = await fetch(`https://localhost:7233/api/Noticias/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData.message);
+        fetchData();
+      } else {
+        console.log('Error al eliminar la noticia');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Paper
       shadow="md"
       p="xl"
       radius="md"
-      sx={{ backgroundImage: `url(${image})` }}
+      sx={{ backgroundImage: `url(${imagen})` }}
       className={classes.card}
     >
       <div>
         <Title order={3} className={classes.title}>
-          {title}
+          {frase}
         </Title>
-        <Text className={classes.date}>{date}</Text>
+        <Text className={classes.date}>{fecha}</Text>
+        {Admin ? <div style={{ display: 'flex', flexDirection:'row' }}>
+          <ActionIcon variant="transparent" size="lg" className={'socialIcon'}>
+            <Edit
+              size={20}
+              // onClick={open}
+              strokeWidth={2}
+              color={'white'}
+            />
+          </ActionIcon>
+          <ActionIcon variant="transparent" size="lg" className={'socialIcon'}>
+            <Trash
+              size={20}
+              onClick={() => {handleDeleteNotice(id)}}
+              strokeWidth={2}
+              color={'white'}
+            />
+          </ActionIcon>
+        </div> : null}
       </div>
     </Paper>
   );
 }
-
-const data = [
-  {
-    id: 1,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/05/KL_J2.jpg',
-    title: '1K se coloca líder en la jornada más goleadora',
-    date: '14 MAYO 2023'
-  },
-  {
-    id: 2,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/05/16831283669188.jpg',
-    title: 'Djibril Cissé, destacado en las compras para la 2ª jornada',
-    date: '13 MAYO 2023'
-  },
-  {
-    id: 3,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/05/Fvit7yDXwAE3E5L.jpeg',
-    title: '¡La Kings League InfoJobs volvió por todo lo alto!',
-    date: '08 MAYO 2023'
-  },
-  {
-    id: 4,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/022_MercatoKings1_RachelAlvhz-scaled.jpg',
-    title: 'Se acabó el ‘mercato’: ya tenemos plantillas definitivas',
-    date: '26 ABRIL 2023'
-  },
-  {
-    id: 5,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/MQJM00394.jpg',
-    title: 'Novedades del reglamento para el 2º split',
-    date: '24 ABRIL 2023'
-  },
-  {
-    id: 6,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/J12-y-cronicas-2023-04-18T090628.652-1.jpg',
-    title: 'Así será el innovador playoff del 2º split',
-    date: '19 ABRIL 2023'
-  },
-  {
-    id: 7,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/MercatoKings_dia1.jpg',
-    title: 'Mercato: ¡Acuerdo múltiple entre Jijantes, Porcinos, Aniquiladores y El Barrio!',
-    date: '13 ABRIL 2023'
-  },
-  {
-    id: 8,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/queens-1-e1681152528960.jpeg',
-    title: 'Estas son las jugadoras del draft de la Queens League Oysho',
-    date: '10 ABRIL 2023'
-  },
-  {
-    id: 9,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/PSMQ05486-e1681119398469.jpg',
-    title: 'Edgar Alvaro ficha por el Rayo y Marc Pelaz por Los Troncos',
-    date: '10 ABRIL 2023'
-  },
-  {
-    id: 10,
-    image: 'https://kingsleague.pro/wp-content/uploads/2023/04/Ubon_F4.jpg',
-    title: 'Cristian Ubón ficha por Ultimate Móstoles',
-    date: '05 ABRIL 2023'
-  },
-];
 
 
 export default function CarouselE() {
@@ -120,6 +100,12 @@ export default function CarouselE() {
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [forceUpdate, setForceUpdate] = useState(false);
   const [firstTime, setFirstTime] = useState(false);
+  const { Admin } = UseAdmin();
+  const [data, setData] = useState([])
+  const [frase, setFrase] = useState('')
+  const [imagen, setImagen] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
     function handleResize() {
@@ -137,14 +123,67 @@ export default function CarouselE() {
     };
   }, [mobile, firstTime]);
 
+  const fetchNotices = () => {
+    fetch('https://localhost:7233/api/Noticias')
+    .then(response => response.json())
+    .then(data => {
+      setData(data);
+    })
+    .catch(error => console.error('Error al obtener los datos de la API:', error));
+  };
+
+  useEffect(() => {
+    fetchNotices()
+  }, [])
+
+  const handleInsertNotice = async () => {
+    const newNotice = {
+      frase: frase,
+      imagen: imagen,
+      fecha: fecha
+    };
+  
+    try {
+      const response = await fetch('https://localhost:7233/api/Noticias', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newNotice)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al crear la noticia');
+      }
+  
+      const data = await response.json();
+      console.log('Respuesta:', data);
+      fetchNotices();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  
+    close();
+  };  
+
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
-      <Card {...item} />
+      <Card {...item} fetchData={fetchNotices} />
     </Carousel.Slide>
   ));
 
   return (
     <div key={forceUpdate}>
+      {Admin ?
+        <div style={{display:'flex', flexDirection:'row', marginLeft: 'auto', marginBottom: '2px'}}>
+          <Button onClick={open} style={{display: 'flex', marginLeft: 'auto'}} color="orange" radius="md" size="xs" uppercase>
+            Añadir noticia
+          </Button>
+          <Button style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
+            Añadir jornada
+          </Button>
+        </div>
+      : null}
       <Carousel
         mx="auto"
         withIndicators
@@ -157,6 +196,7 @@ export default function CarouselE() {
       >
         {slides}
       </Carousel>
+      <ModalInsertNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} opened={opened} close={close} handleInsertNotice={handleInsertNotice} />
     </div>
   );
 }

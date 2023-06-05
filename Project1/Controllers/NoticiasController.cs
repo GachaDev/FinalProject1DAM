@@ -96,51 +96,42 @@ namespace Project1.Controllers
         // POST: api/Noticias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Noticias>> PostNoticias(Noticias Noticias)
+        public async Task<ActionResult<Noticias>> PostNoticias([FromBody] Noticias Noticias)
         {
-            if (_context.Noticias == null)
+            if (Noticias == null)
             {
                 return Problem("Entity set 'AppDbContext.Noticias' is null.");
             }
 
-            string insertQuery = "INSERT INTO Noticias (Columna1, Columna2,Columna3,Columna4) VALUES (@valor1, @valor2,@valor3,@valor4)";
-            SqlParameter[] insertParameters = new SqlParameter[]
-            {
-                new SqlParameter("@valor1", Noticias.id),
-                new SqlParameter("@valor2", Noticias.fecha),
-                new SqlParameter("@valor3", Noticias.imagen),
-                new SqlParameter("@valor4", Noticias.frase)
+            string insertQuery = "INSERT INTO Noticias (fecha,imagen,frase) VALUES ({0}, {1}, {2})";
 
-            };
-
-            _context.Database.ExecuteSqlRaw(insertQuery, insertParameters);
+            _context.Database.ExecuteSqlRaw(insertQuery, Noticias.fecha, Noticias.imagen, Noticias.frase);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNoticias", new { id = Noticias.id }, Noticias);
+            return Ok(new { message = "Jugador creado con éxito" });
         }
 
-        // DELETE: api/Noticias/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNoticias(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (_context.Noticias == null)
-            {
-                return NotFound();
-            }
+            var Noticias = await _context.Noticias.FindAsync(id);
 
-            string deleteQuery = "DELETE FROM Noticias WHERE Id = @id";
-            SqlParameter deleteParameter = new SqlParameter("@id", id);
-
-            var Noticias = await _context.Noticias.FromSqlRaw(deleteQuery, deleteParameter).FirstOrDefaultAsync();
             if (Noticias == null)
             {
                 return NotFound();
             }
 
-            _context.Noticias.Remove(Noticias);
-            await _context.SaveChangesAsync();
+            try
+            {
+                string deleteQuery = "DELETE FROM Noticias WHERE id = {0}";
+                _context.Database.ExecuteSqlRaw(deleteQuery, id);
 
-            return NoContent();
+                return Ok(new { message = "Noticia eliminada con éxito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error al eliminar la noticia." });
+            }
         }
 
         private bool NoticiasExists(int id)

@@ -221,6 +221,7 @@ header {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  margin-top: 2rem;
 }
 
 .homeDerecha {
