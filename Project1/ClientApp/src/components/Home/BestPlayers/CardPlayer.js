@@ -3,7 +3,7 @@ import { Trash, Edit } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
 import { UseAdmin } from '../../../Zustand/UseAdmin';
 
-export default function CardPlayer({backUrl, title, category, name, playerImg}) {
+export default function CardPlayer({backUrl, title, category, name, playerImg, handleDeleteCartel, idCartel}) {
     const { Admin } = UseAdmin();
     return (
         <div style={{ flex: '1' }}>
@@ -27,15 +27,9 @@ export default function CardPlayer({backUrl, title, category, name, playerImg}) 
                         </Title>
                         {Admin ? <div style={{ display: 'flex', flexDirection:'row' }}>
                             <ActionIcon variant="transparent" size="lg">
-                                <Edit
-                                size={20}
-                                strokeWidth={2}
-                                color={'white'}
-                                />
-                            </ActionIcon>
-                            <ActionIcon variant="transparent" size="lg">
                                 <Trash
                                 size={20}
+                                onClick={()=>{handleDeleteCartel(idCartel)}}
                                 strokeWidth={2}
                                 color={'white'}
                                 />
