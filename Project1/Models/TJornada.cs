@@ -8,6 +8,6 @@ namespace Project1.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-        public DateTime fecha { get; set; }
+        public string fecha { get; set; }
     }
 }

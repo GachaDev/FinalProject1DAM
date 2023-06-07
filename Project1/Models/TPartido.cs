@@ -7,8 +7,23 @@ namespace Project1.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
-        public int jornada { get; set; }
-        public string hour { get; set; }
+        public int idPartido { get; set; }
+        public int Jornada { get; set; }
+        public string hora { get; set; }
+        public string equipoLocal { get; set; }
+        public string equipoVisitante { get; set; }
+        public int golesLocal { get; set; }
+        public int golesVisitante { get; set; }
+        [NotMapped]
+        public string inicialesLocal { get; set; }
+        [NotMapped]
+        public string inicialesVisitante { get; set; }
+        [NotMapped]
+        public string logoLocal { get; set; }
+        [NotMapped]
+        public string logoVisitante { get; set; }
+
+        [NotMapped]
+        public string fecha { get; set; }
     }
 }
