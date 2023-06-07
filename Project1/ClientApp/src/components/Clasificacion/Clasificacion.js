@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Table, ScrollArea } from '@mantine/core';
-import { UseAdmin } from '../../Zustand/UseAdmin';
-import { Button } from '@mantine/core';
 
 //El componente BarWithColor es una función que recibe como prop un texto y devuelve un componente que muestra un color de barra según el valor del texto.
 const BarWithColor = ({ text }) => {
@@ -130,8 +128,6 @@ export default function Clasificacion() {
     </tr>
   ));
   
-  const { Admin } = UseAdmin();
-
   //Se utiliza el componente ScrollArea para agregar una barra de desplazamiento vertical a la tabla.
   return (
     <ScrollArea>

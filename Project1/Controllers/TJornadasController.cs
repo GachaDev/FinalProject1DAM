@@ -96,23 +96,17 @@ namespace Project1.Controllers
         [HttpPost]
         public async Task<ActionResult<TJornada>> PostTJornada(TJornada tJornada)
         {
-            if (_context.TJornada == null)
+            if (tJornada == null)
             {
-                return Problem("Entity set 'AppDbContext.TJornada' is null.");
+                return Problem("Entity set 'AppDbContext.tJornada' is null.");
             }
 
-            string insertQuery = "INSERT INTO TJornada (Columna1, Columna2) VALUES (@valor1, @valor2)";
-            SqlParameter[] insertParameters = new SqlParameter[]
-            {
-                new SqlParameter("@valor1", tJornada.id),
-                new SqlParameter("@valor2", tJornada.fecha)
+            string insertQuery = "INSERT INTO TJornada (fecha) VALUES ({0})";
 
-            };
-
-            _context.Database.ExecuteSqlRaw(insertQuery, insertParameters);
+            _context.Database.ExecuteSqlRaw(insertQuery, tJornada.fecha);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTJugador", new { id =tJornada.id }, tJornada);
+            return Ok(new { message = "Jornada creado con éxito" });
         }
 
 

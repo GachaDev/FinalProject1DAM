@@ -9,6 +9,8 @@ import { Trash, Edit } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
 import ModalEditNoticia from './ModalEditNoticia';
 import ModalInsertCartel from './ModalInsertCartel';
+import ModalInsertJornada from './ModalInsertJornada';
+import ModalInsertPartido from './ModalInsertPartido';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -106,14 +108,22 @@ export default function CarouselE() {
   const [frase, setFrase] = useState('')
   const [imagen, setImagen] = useState('')
   const [fecha, setFecha] = useState('')
+  const [fechaJ, setFechaJ] = useState('')
   const [id, setId] = useState('')
   const [idJugador, setIdJugador] = useState('')
   const [texto1, setTexto1] = useState('')
   const [texto2, setTexto2] = useState('')
+  const [idJornada, setIdJornada] = useState('');
+  const [hora, setHora] = useState('');
+  const [golesLocal, setGolesLocal] = useState('');
+  const [golesVisitante, setGolesVisitante] = useState('');
+  const [equipoLocal, setEquipoLocal] = useState('');
+  const [equipoVisitante, setEquipoVisitante] = useState('');
   const [opened, { open, close }] = useDisclosure(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartelModalOpen, setIsCartelModalOpen] = useState(false);
-
+  const [isJornadaModalOpen, setIsJornadaModalOpen] = useState(false);
+  const [isPartidoModalOpen, setIsPartidoModalOpen] = useState(false);
 
   useEffect(() => {
     function handleResize() {
@@ -247,6 +257,34 @@ export default function CarouselE() {
     setIsCartelModalOpen(false);
   }; 
 
+  const handleInsertJornada = async () => {
+    try {
+      const response = await fetch('https://localhost:7233/api/TJornadas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fecha: fechaJ })
+      });
+  
+      if (response.ok) {
+        console.log('Jornada creada con éxito');
+      } else {
+        console.log('Error al crear la jornada');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  
+    setFechaJ('');
+    setIsJornadaModalOpen(false);
+  };
+
+  const handleInsertPartido = async () => {
+    setIsPartidoModalOpen(false);
+  };
+  
+
   const slides = data.map((item) => (
     <Carousel.Slide key={item.id}>
       <Card {...item} fetchData={fetchNotices} openModal={() => setIsModalOpen(true)} setFrase={setFrase} setImagen={setImagen} setFecha={setFecha} setId={setId} />
@@ -260,11 +298,14 @@ export default function CarouselE() {
           <Button onClick={open} style={{display: 'flex', marginLeft: 'auto'}} color="orange" radius="md" size="xs" uppercase>
             Añadir noticia
           </Button>
-          <Button style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
+          <Button onClick={()=>{setIsJornadaModalOpen(true)}} style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
             Añadir jornada
           </Button>
           <Button onClick={()=>{setIsCartelModalOpen(true)}} style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
             Añadir cartel
+          </Button>
+          <Button onClick={()=>{setIsPartidoModalOpen(true)}} style={{display: 'flex', marginLeft: '10px'}} color="orange" radius="md" size="xs" uppercase>
+            Añadir partido
           </Button>
         </div>
       : <div style={{marginTop:'2rem'}}> </div>}
@@ -283,6 +324,8 @@ export default function CarouselE() {
       <ModalInsertNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} opened={opened} close={close} handleInsertNotice={handleInsertNotice} />
       <ModalEditNoticia frase={frase} setFrase={setFrase} imagen={imagen} setImagen={setImagen} fecha={fecha} setFecha={setFecha} openedModal={isModalOpen} closeModal={() => setIsModalOpen(false)} editNotice={editNotice} />
       <ModalInsertCartel id={idJugador} setId={setIdJugador} texto1={texto1} setTexto1={setTexto1} texto2={texto2} setTexto2={setTexto2} opened={isCartelModalOpen} close={() => setIsCartelModalOpen(false)} handleInsertCartel={handleInsertCartel} />
+      <ModalInsertJornada fechaJ={fechaJ} setFechaJ={setFechaJ} opened={isJornadaModalOpen} close={() => setIsJornadaModalOpen(false)} handleInsertJornada={handleInsertJornada} />
+      <ModalInsertPartido idJornada={idJornada} setIdJornada={setIdJornada} hora={hora} setHora={setHora} golesLocal={golesLocal} setGolesLocal={setGolesLocal} golesVisitante={golesVisitante} setGolesVisitante={setGolesVisitante} equipoLocal={equipoLocal} setEquipoLocal={setEquipoLocal} equipoVisitante={equipoVisitante} setEquipoVisitante={setEquipoVisitante} opened={isPartidoModalOpen} close={() => setIsPartidoModalOpen(false)} handleInsertPartido={handleInsertPartido} />
     </div>
   );
 }
