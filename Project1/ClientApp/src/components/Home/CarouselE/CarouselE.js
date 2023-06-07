@@ -180,11 +180,10 @@ export default function CarouselE() {
 
   const handleInsertNotice = async () => {
     const newNotice = {
-      id: idJugador,
-      texto1: texto1,
-      texto2: texto2
+      imagen: imagen,
+      frase: frase,
+      fecha: fecha
     };
-  
     try {
       const response = await fetch('https://localhost:7233/api/Noticias', {
         method: 'POST',
