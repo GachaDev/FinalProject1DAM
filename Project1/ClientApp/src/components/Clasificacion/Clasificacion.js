@@ -1,130 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Table, ScrollArea } from '@mantine/core';
 import { UseAdmin } from '../../Zustand/UseAdmin';
 import { Button } from '@mantine/core';
-
-//La variable 'data' contiene una matriz de objetos que representan información de clasificación de equipos de fútbol.
-const data = [
-  {
-    name: '1K',
-    pos:1,
-    shield: 'https://kingsleague.pro/wp-content/uploads/2022/11/1k.svg',
-    point:6,
-    victory:2,
-    defeat:0,
-    gf:10,
-    gc:7
-  },
-  {
-    name: 'xBuyer Team',
-    pos:2,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/xbuyer-team.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:9,
-    gc:5
-  },
-  {
-    name: 'Los Troncos FC',
-    pos:3,
-    shield: 'https://kingsleague.pro/wp-content/uploads/2022/12/los-troncos.png',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:10,
-    gc:7
-  },
-  {
-    name: 'Ultimate Móstoles',
-    pos:4,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/ultimate-mostoles.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:8,
-    gc:5
-  },
-  {
-    name: 'Kunisports',
-    pos:5,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/kunisports.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:6,
-    gc:3
-  },
-  {
-    name: 'Aniquiladores FC',
-    pos:6,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/aniquiladores.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:9,
-    gc:7
-  },
-  {
-    name: 'Porcinos FC',
-    pos:7,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/porcinos-fc.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:7,
-    gc:6
-  },
-  {
-    name: 'El Barrio',
-    pos:8,
-    shield: 'https://kingsleague.pro/wp-content/uploads/2022/11/el-bbarrio.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:5,
-    gc:7
-  },
-  {
-    name: 'Saiyans FC',
-    pos:9,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/saiyans-fc.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:6,
-    gc:9
-  },
-  {
-    name: 'PIO FC',
-    pos:10,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/pio.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:5,
-    gc:8
-  },
-  {
-    name: 'Rayo de Barcelona',
-    pos:11,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/rayo-barcelona.svg',
-    point:3,
-    victory:1,
-    defeat:1,
-    gf:5,
-    gc:10
-  },
-  {
-    name: 'Jijantes FC',
-    pos:12,
-    shield:'https://kingsleague.pro/wp-content/uploads/2022/11/jijantes-fc.svg',
-    point:0,
-    victory:0,
-    defeat:2,
-    gf:4,
-    gc:10
-  }
-]
 
 //El componente BarWithColor es una función que recibe como prop un texto y devuelve un componente que muestra un color de barra según el valor del texto.
 const BarWithColor = ({ text }) => {
@@ -150,6 +27,78 @@ const BarWithColor = ({ text }) => {
 
 //El componente Clasificacion muestra una tabla con la información de clasificación de los equipos. Cada fila se genera a partir de los datos en la matriz data. El componente BarWithColor se utiliza para mostrar la posición del equipo con una barra de color.
 export default function Clasificacion() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://localhost:7233/api/TPartidoes')
+      .then(response => response.json())
+      .then(apiData => {
+        const teams = {};
+
+        apiData.forEach(partido => {
+          if (!teams[partido.equipoLocal]) {
+            teams[partido.equipoLocal] = {
+              name: partido.equipoLocal,
+              pos: 0,
+              shield: partido.logoLocal,
+              point: 0,
+              victory: 0,
+              defeat: 0,
+              gf: 0,
+              gc: 0
+            };
+          }
+          if (!teams[partido.equipoVisitante]) {
+            teams[partido.equipoVisitante] = {
+              name: partido.equipoVisitante,
+              pos: 0,
+              shield: partido.logoVisitante,
+              point: 0,
+              victory: 0,
+              defeat: 0,
+              gf: 0,
+              gc: 0
+            };
+          }
+
+          teams[partido.equipoLocal].gf += partido.golesLocal;
+          teams[partido.equipoLocal].gc += partido.golesVisitante;
+          teams[partido.equipoVisitante].gf += partido.golesVisitante;
+          teams[partido.equipoVisitante].gc += partido.golesLocal;
+
+          if (partido.golesLocal > partido.golesVisitante) {
+            teams[partido.equipoLocal].point += 3;
+            teams[partido.equipoLocal].victory += 1;
+            teams[partido.equipoVisitante].defeat += 1;
+          } else if (partido.golesLocal < partido.golesVisitante) {
+            teams[partido.equipoVisitante].point += 3;
+            teams[partido.equipoVisitante].victory += 1;
+            teams[partido.equipoLocal].defeat += 1;
+          } else {
+            teams[partido.equipoLocal].point += 1;
+            teams[partido.equipoVisitante].point += 1;
+          }
+        });
+
+        const transformedData = Object.values(teams).sort((a, b) => {
+          if (a.point !== b.point) {
+            return b.point - a.point;
+          }
+          if (a.gf !== b.gf) {
+            return b.gf - a.gf;
+          }
+          return b.gc - a.gc;
+        }).map((team, index) => ({
+          ...team,
+          pos: index + 1
+        }));
+
+        setData(transformedData);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td> 
@@ -201,9 +150,6 @@ export default function Clasificacion() {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-      {Admin ? <Button style={{marginRight: '1%', marginLeft: 'auto', display: 'block'}} color="orange" radius="md" size="xs" uppercase>
-        Insertar Equipo
-      </Button> : null}
     </ScrollArea>
   );
 }

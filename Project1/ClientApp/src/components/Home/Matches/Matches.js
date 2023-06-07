@@ -1,35 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Title, ActionIcon } from '@mantine/core';
 import { ChevronLeft, ChevronRight } from 'tabler-icons-react';
 import Match from './Match';
 
 export default function Matches() {
-  const jornadas = [
-    {
-      title: 'Jornada 1',
-      date: '7 de Mayo de 2023',
-      matches: [
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/xbuyer-team.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/saiyans-fc.svg", team1Initials: "XBU", team2Initials: "SAI", finished: true, goalsTeam1: 3, goalsTeam2: 2 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/el-bbarrio.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/jijantes-fc.svg", team1Initials: "ELB", team2Initials: "JFC", finished: true, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/ultimate-mostoles.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/aniquiladores.svg", team1Initials: "ULT", team2Initials: "ANI", finished: true, goalsTeam1: 2, goalsTeam2: 2 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/kunisports.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/rayo-barcelona.svg", team1Initials: "KNS", team2Initials: "RDB", finished: true, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/pio.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/1k.svg", team1Initials: "PIO", team2Initials: "1K", finished: true, goalsTeam1: 1, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/porcinos-fc.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/12/los-troncos.png", team1Initials: "POR", team2Initials: "TFC", finished: true, goalsTeam1: 2, goalsTeam2: 1 },
-      ],
-    },
-    {
-      title: 'Jornada 2',
-      date: '14 de Mayo de 2023',
-      matches: [
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/xbuyer-team.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/saiyans-fc.svg", team1Initials: "XBU", team2Initials: "SAI", finished: false, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/el-bbarrio.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/jijantes-fc.svg", team1Initials: "ELB", team2Initials: "JFC", finished: false, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/ultimate-mostoles.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/aniquiladores.svg", team1Initials: "ULT", team2Initials: "ANI", finished: false, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/kunisports.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/rayo-barcelona.svg", team1Initials: "KNS", team2Initials: "RDB", finished: false, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/pio.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/11/1k.svg", team1Initials: "PIO", team2Initials: "1K", finished: false, goalsTeam1: 0, goalsTeam2: 0 },
-        { team1: "https://kingsleague.pro/wp-content/uploads/2022/11/porcinos-fc.svg", team2: "https://kingsleague.pro/wp-content/uploads/2022/12/los-troncos.png", team1Initials: "POR", team2Initials: "TFC", finished: false, goalsTeam1: 0, goalsTeam2: 0 },
-      ],
-    },
-  ];
+  const [jornadas, setJornadas] = useState([]);
+
+  useEffect(() => {
+    fetch('https://localhost:7233/api/TPartidoes')
+      .then(response => response.json())
+      .then(partidos => {
+        const newJornadas = partidos.reduce((acc, partido) => {
+          const jornada = acc.find(j => j.title === `Jornada ${partido.jornada}`);
+          if (jornada) {
+            jornada.matches.push({
+              team1: partido.logoLocal,
+              team2: partido.logoVisitante,
+              team1Initials: partido.inicialesLocal,
+              team2Initials: partido.inicialesVisitante,
+              finished: true,
+              goalsTeam1: partido.golesLocal,
+              goalsTeam2: partido.golesVisitante
+            });
+          } else {
+            acc.push({
+              title: `Jornada ${partido.jornada}`,
+              date: partido.fecha,
+              matches: [{
+                team1: partido.logoLocal,
+                team2: partido.logoVisitante,
+                team1Initials: partido.inicialesLocal,
+                team2Initials: partido.inicialesVisitante,
+                finished: true,
+                goalsTeam1: partido.golesLocal,
+                goalsTeam2: partido.golesVisitante
+              }]
+            });
+          }
+          return acc;
+        }, []);
+        console.log(newJornadas)
+        setJornadas(newJornadas);
+      })
+      .catch(error => {
+        console.log('Error al obtener los datos de la API:', error);
+      });
+  }, []);
 
   const [currentJornada, setCurrentJornada] = useState(0);
 
@@ -53,12 +69,12 @@ export default function Matches() {
       <div className='jornadaInfo'>
         <ActionIcon variant="transparent" onClick={handlePreviousJornada}><ChevronLeft size="1rem" /></ActionIcon>
         <div>
-          <span className='titleJornada'>{currentJornadaData.title}</span>
-          <span className='dateJornada' style={{ textAlign: 'center', fontSize: 12 }}>{currentJornadaData.date}</span>
+          <span className='titleJornada'>{currentJornadaData?.title}</span>
+          <span className='dateJornada' style={{ textAlign: 'center', fontSize: 12 }}>{currentJornadaData?.date}</span>
         </div>
         <ActionIcon variant="transparent" onClick={handleNextJornada}><ChevronRight size="1rem" /></ActionIcon>
       </div>
-      {currentJornadaData.matches.map((match, index) => (
+      {currentJornadaData?.matches.map((match, index) => (
         <Match
           key={index}
           index={index}
