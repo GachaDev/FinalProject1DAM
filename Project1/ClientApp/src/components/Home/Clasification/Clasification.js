@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Title, Table } from '@mantine/core';
 import BarWithColor from './BarWithColor';
+import { UseAdmin } from '../../../Zustand/UseAdmin';
 
 export default function Clasification() {
   const [data, setData] = useState([]);
+  const { Partidos } = UseAdmin();
 
   useEffect(() => {
     fetch('https://localhost:7233/api/TPartidoes')
@@ -74,7 +76,7 @@ export default function Clasification() {
       .catch(error => {
         console.error('Error:', error);
       });
-  }, []);
+  }, [Partidos]);
 
   const rows = data.map(item => (
     <tr key={item.name}>

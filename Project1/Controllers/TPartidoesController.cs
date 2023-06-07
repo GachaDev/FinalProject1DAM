@@ -11,9 +11,6 @@ using Project1.Models;
 
 namespace Project1.Controllers
 {
-    /// <summary>
-    /// llamo
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TPartidoesController : ControllerBase
@@ -114,22 +111,27 @@ namespace Project1.Controllers
         }
 
 
-        // POST: api/TPartidoes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TPartido>> PostTCartel([FromBody] TPartido tPartido)
+        public async Task<ActionResult<TPartido>> Register([FromBody] TPartido TPartido)
         {
-            if (tPartido == null)
+            if (TPartido == null)
             {
-                return Problem("Entity set 'AppDbContext.TPartido' is null.");
+                return BadRequest("No se ha proporcionado ningún partido.");
             }
 
-            string insertQuery = "INSERT INTO TPartido(idPartido,Jornada,hora,equipoLocal,equipoVisitante,golesLocal,golesVisitante) VALUES ({0}, {1}, {2},{3},{4},{5},{6})";
+            try
+            {
+                string insertQuery = "INSERT INTO TPartido (Jornada, hora, golesLocal, golesVisitante, equipoLocal, equipoVisitante) VALUES ({0}, {1}, {2}, {3}, {4}, {5})";
+                _context.Database.ExecuteSqlRaw(insertQuery, TPartido.Jornada, TPartido.hora, TPartido.golesLocal, TPartido.golesVisitante, TPartido.equipoLocal, TPartido.equipoVisitante);
 
-            _context.Database.ExecuteSqlRaw(insertQuery, tPartido.idPartido, tPartido.Jornada, tPartido.hora,tPartido.equipoLocal,tPartido.equipoVisitante,tPartido.golesLocal,tPartido.golesVisitante);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Partido creado con éxito" });
+                return Ok(new { message = "Partido creado con éxito" });
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(new { message = "Error al crear el partido." });            
+            }
         }
 
         // DELETE: api/TPartidoes/5

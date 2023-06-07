@@ -103,7 +103,7 @@ export default function CarouselE() {
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [forceUpdate, setForceUpdate] = useState(false);
   const [firstTime, setFirstTime] = useState(false);
-  const { Admin, setCartel } = UseAdmin();
+  const { Admin, setCartel, setPartidos } = UseAdmin();
   const [data, setData] = useState([])
   const [frase, setFrase] = useState('')
   const [imagen, setImagen] = useState('')
@@ -113,7 +113,7 @@ export default function CarouselE() {
   const [idJugador, setIdJugador] = useState('')
   const [texto1, setTexto1] = useState('')
   const [texto2, setTexto2] = useState('')
-  const [idJornada, setIdJornada] = useState('');
+  const [idJornada, setIdJornada] = useState('1');
   const [hora, setHora] = useState('');
   const [golesLocal, setGolesLocal] = useState('');
   const [golesVisitante, setGolesVisitante] = useState('');
@@ -218,7 +218,6 @@ export default function CarouselE() {
   };
 
   const handleInsertCartel = async () => {
-    console.log('ee')
     const newC = {
       id: idJugador,
       texto1: texto1,
@@ -280,7 +279,76 @@ export default function CarouselE() {
     setIsJornadaModalOpen(false);
   };
 
+
+
   const handleInsertPartido = async () => {
+    const newPartido = {
+      Jornada: idJornada,
+      hora: hora,
+      equipoLocal: equipoLocal,
+      equipoVisitante: equipoVisitante,
+      golesLocal: golesLocal,
+      golesVisitante: golesVisitante,
+      inicialesLocal: '',
+      inicialesVisitante: '',
+      logoLocal: '',
+      logoVisitante: '',
+      fecha: ''
+    };
+    try {
+      const response = await fetch('https://localhost:7233/api/TPartidoes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newPartido)
+      });
+  
+      if (response.ok) {
+        console.log('Partido creado con éxito');
+        fetch('https://localhost:7233/api/TPartidoes')
+        .then(response => response.json())
+        .then(partidos => {
+          const newJornadas = partidos.reduce((acc, partido) => {
+            const jornada = acc.find(j => j.title === `Jornada ${partido.jornada}`);
+            if (jornada) {
+              jornada.matches.push({
+                team1: partido.logoLocal,
+                team2: partido.logoVisitante,
+                team1Initials: partido.inicialesLocal,
+                team2Initials: partido.inicialesVisitante,
+                finished: true,
+                goalsTeam1: partido.golesLocal,
+                goalsTeam2: partido.golesVisitante
+              });
+            } else {
+              acc.push({
+                title: `Jornada ${partido.jornada}`,
+                date: partido.fecha,
+                matches: [{
+                  team1: partido.logoLocal,
+                  team2: partido.logoVisitante,
+                  team1Initials: partido.inicialesLocal,
+                  team2Initials: partido.inicialesVisitante,
+                  finished: true,
+                  goalsTeam1: partido.golesLocal,
+                  goalsTeam2: partido.golesVisitante
+                }]
+              });
+            }
+            return acc;
+          }, []);
+          setPartidos(newJornadas);
+        })
+        .catch(error => {
+          console.log('Error al obtener los datos de la API:', error);
+        });
+      } else {
+        console.log('Error al crear el partido');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
     setIsPartidoModalOpen(false);
   };
   

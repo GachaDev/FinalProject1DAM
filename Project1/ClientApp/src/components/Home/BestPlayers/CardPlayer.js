@@ -1,5 +1,5 @@
 import { Paper, Text, Title, Image, rem } from '@mantine/core';
-import { Trash, Edit } from 'tabler-icons-react';
+import { Trash } from 'tabler-icons-react';
 import { ActionIcon } from '@mantine/core';
 import { UseAdmin } from '../../../Zustand/UseAdmin';
 
