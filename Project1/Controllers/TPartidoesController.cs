@@ -56,60 +56,6 @@ namespace Project1.Controllers
             return tPartido;
         }
 
-        // GET: api/TPartidoes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TPartido>> GetTPartido(int id)
-        {
-            string query = "SELECT * FROM TPartido WHERE Id = @id";
-            var tPartido = await _context.TPartido.FromSqlRaw(query, new SqlParameter("@id", id)).FirstOrDefaultAsync();
-
-            if (tPartido == null)
-            {
-                return NotFound();
-            }
-
-            return tPartido;
-        }
-
-        // PUT: api/TPartidoes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTPartido(int id, TPartido tPartido)
-        {
-            if (id != tPartido.idPartido)
-            {
-                return BadRequest();
-            }
-
-            string query = "UPDATE TTeam SET Columna1 = @valor1, Columna2 = @valor2,Columna3 = @valor3 WHERE Id = @id";
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@valor1", tPartido.idPartido),
-                new SqlParameter("@valor2", tPartido.Jornada),
-                new SqlParameter("@valor3", tPartido.hora),
-                new SqlParameter("@id", id)
-            };
-
-            try
-            {
-                await _context.Database.ExecuteSqlRawAsync(query, parameters);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TPartidoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
 
         [HttpPost]
         public async Task<ActionResult<TPartido>> Register([FromBody] TPartido TPartido)
@@ -132,30 +78,6 @@ namespace Project1.Controllers
             {
                 return BadRequest(new { message = "Error al crear el partido." });            
             }
-        }
-
-        // DELETE: api/TPartidoes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTPartido(int id)
-        {
-            if (_context.TPartido == null)
-            {
-                return NotFound();
-            }
-
-            string deleteQuery = "DELETE FROM TPartido WHERE Id = @id";
-            SqlParameter deleteParameter = new SqlParameter("@id", id);
-
-            var tPartido = await _context.TPartido.FromSqlRaw(deleteQuery, deleteParameter).FirstOrDefaultAsync();
-            if (tPartido == null)
-            {
-                return NotFound();
-            }
-
-            _context.TPartido.Remove(tPartido);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool TPartidoExists(int id)
