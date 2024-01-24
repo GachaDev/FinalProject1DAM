@@ -1,1 +1,1 @@
-Our final 1ºDAM Project maded in React and C#
+Our final 1ºDAM Project maded with React and C#
